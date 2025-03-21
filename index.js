@@ -1,10 +1,9 @@
 import "./global.css";
 import { registerRootComponent } from "expo";
-import { ExpoRoot } from "expo-router";
+import BottomTabNavigator from "./navigation/BottomNavigator";
 
 export function App() {
-  const ctx = require.context("./app");
-  return <ExpoRoot context={ctx} />;
+  return <BottomTabNavigator />;
 }
 
 registerRootComponent(App);
