@@ -50,4 +50,22 @@ export const getFriendById = async (id) => {
                 reject(error);
             });
     })
+};
+
+// Get notifications
+export const getNotifications = async ()=>{
+    return new Promise((resolve, reject) => {
+        apiConnector.get(`/get_notifications`)
+            .then((res)=>resolve(res.data))
+            .catch((err)=>reject);
+    })
+};
+
+// Get current user
+export const getUser = async ()=>{
+    return new Promise((resolve, reject) => {
+        apiConnector.get(`/get_current_user`)
+            .then((res)=>resolve(res.data))
+            .catch((err)=>reject(err));
+    })
 }

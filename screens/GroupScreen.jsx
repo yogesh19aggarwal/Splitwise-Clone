@@ -1,12 +1,18 @@
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import { getGroups } from '../services/getApi';
+import GroupCard from '../components/group/GroupCard';
+import TotalBalanceHeader from '../components/TotalBalanceHeader';
+import GroupToggleSection from '../components/group/GroupToggleSection';
+import { getFilteredGroups } from '../utility/groupUtils';
+import { useGroupContext } from '../context/GlobalContext';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 
 const GroupScreen = () => {
-  const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showInactiveGroups, setShowInactiveGroups] = useState(false);
+  const { groups, setGroups } = useGroupContext();
 
   useEffect(() => {
     const getData = async () => {
@@ -25,69 +31,57 @@ const GroupScreen = () => {
     getData();
   }, []);
 
-  function calculateTotalBalance(group) {
-    const userId = 67090865;
-    let totalAmount = 0;
-    let hasExpenses = false;
-
-    group.members.forEach(member => {
-      if (member.id !== userId && member.balance.length > 0) {
-        hasExpenses = true;
-        member.balance.forEach(balance => {
-          totalAmount += parseFloat(balance.amount);
-        });
-      }
-    });
-
-    if (!hasExpenses) return null;
-    return totalAmount;
-  }
-
-  function getBalanceText(totalBalance) {
-    if (totalBalance === null) return "no expenses";
-    if (totalBalance < 1 && totalBalance > -1) return "settled up";
-    if (totalBalance < 0) return `You are owed ₹${totalBalance.toFixed(2)}`;
-    return `You owe ₹${Math.abs(totalBalance).toFixed(2)}`;
-  }
-
-  function getBalanceTextColor(totalBalance) {
-    if (totalBalance === null) return 'text-gray-400';
-    if (totalBalance < 1 && totalBalance > -1) return 'text-gray-400';
-    if (totalBalance < 0) return 'text-blue-400';
-    return 'text-orange-500';
-  }
+  const { activeGroups, inactiveGroups, hasInactiveGroups } = getFilteredGroups(groups, showInactiveGroups);
 
   return (
     <SafeAreaView className="flex-1 bg-[#1f1f1f]">
-      {
-        loading ? <Text className="text-white text-center mt-4">Loading...</Text> :
-          error ? <Text className="text-white text-center mt-4">Error: {error.message}</Text> :
-            <ScrollView>
-              <View className="flex flex-row items-center justify-between mr-8 ml-2 mt-2">
-                <Text className="text-xl text-white p-4">Overall, you owe $33</Text>
-                <AntDesign name="menufold" size={24} color="white" />
-              </View>
+      {loading ? (
+        <Text className="text-white text-center mt-4">Loading...</Text>
+      ) : error ? (
+        <Text className="text-white text-center mt-4">Error: {error.message}</Text>
+      ) : (
+        <ScrollView>
+          <TotalBalanceHeader groups={groups} />
 
-              {groups.map((item) => {
-                const totalBalance = calculateTotalBalance(item);
-                const balanceText = getBalanceText(totalBalance);
-                const balanceTextColor = getBalanceTextColor(totalBalance);
+          {activeGroups.map(group => (
+            <GroupCard key={group.id} group={group} />
+          ))}
 
-                return (
-                  <View key={item.id} className="flex flex-row items-center p-4">
-                    <Image
-                      className="w-32 h-32 rounded-2xl mr-4"
-                      source={{ uri: item.avatar.medium }}
-                    />
-                    <View>
-                      <Text className="text-lg text-white mb-1">{item.name}</Text>
-                      <Text className={`text-base ${balanceTextColor}`}>{balanceText}</Text>
-                    </View>
-                  </View>
-                );
-              })}
-            </ScrollView>
-      }
+          {hasInactiveGroups && (
+            <GroupToggleSection
+              showInactiveGroups={showInactiveGroups}
+              setShowInactiveGroups={setShowInactiveGroups}
+              inactiveGroupsCount={inactiveGroups.length}
+            />
+          )}
+
+          {showInactiveGroups && inactiveGroups.map(group => (
+            <>
+              <GroupCard key={group.id} group={group} />
+            </>
+          ))}
+
+          {showInactiveGroups &&
+            <View className="flex flex-row justify-center mb-28">
+              <TouchableOpacity
+                className="border border-teal-200 py-2 px-4 w-60 h-14 gap-4 flex flex-row justify-center"
+              >
+                <AntDesign name="addusergroup" size={24} color="white" />
+                <Text className="text-teal-200 text-lg">
+                  Start a new group
+                </Text>
+              </TouchableOpacity>
+            </View>
+          }
+
+        </ScrollView>
+      )}
+
+      <TouchableOpacity className="absolute bottom-4 right-4 bg-[#0E9587] py-3 px-6 rounded-full flex-row items-center justify-center">
+        <Ionicons name="receipt-outline" size={20} color="white" />
+        <Text className="text-white ml-2 text-lg">Add expense</Text>
+      </TouchableOpacity>
+
     </SafeAreaView>
   );
 };

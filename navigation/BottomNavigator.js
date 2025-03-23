@@ -1,45 +1,71 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from '@react-navigation/native';
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import Feather from '@expo/vector-icons/Feather';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import { View } from 'react-native';
+import { StatusBar, View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import { AntDesign, Feather, FontAwesome5, FontAwesome6 } from '@expo/vector-icons';
+import { useGroupContext } from '../context/GlobalContext';
 
 import GroupScreen from '../screens/GroupScreen';
 import FriendsScreen from '../screens/FriendsScreen';
 import AccountScreen from '../screens/AccountScreen';
 import ActivityScreen from '../screens/ActivityScreen';
+import GroupInfo from '../components/group/GroupInfo';
+
+const GroupStack = createNativeStackNavigator();
+
+const GroupStackScreens = () => {
+
+    return (
+        <GroupStack.Navigator>
+            <GroupStack.Screen
+                name="GroupScreen"
+                component={GroupScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: "",
+                    headerStyle: {
+                        backgroundColor: "#222222",
+                    },
+                    headerRight: () => (
+                        <View style={{ flexDirection: "row", gap: 24, marginRight: 15 }}>
+                            <AntDesign name="search1" size={20} color="white" />
+                            <AntDesign name="addusergroup" size={20} color="white" />
+                        </View>
+                    ),
+                }}
+            />
+            <GroupStack.Screen
+                name="GroupInfo"
+                component={GroupInfo}
+                options={{
+                    headerShown: false,
+                }}
+            />
+        </GroupStack.Navigator>
+    );
+};
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomTabNavigator() {
+function BottomTabNavigator() {
+    const {user} = useGroupContext();
+    console.log('user',user?.picture?.small);
     return (
-        <NavigationContainer>
+        <>
             <Tab.Navigator
                 screenOptions={{
                     tabBarStyle: {
-                        backgroundColor: "#1E1E1E",
+                        backgroundColor: "#222222",
                     },
                 }}
             >
                 <Tab.Screen
                     name="Groups"
-                    component={GroupScreen}
+                    component={GroupStackScreens}
                     options={{
                         tabBarLabel: "Groups",
-                        headerShown: true,
-                        headerTitle: "",
-                        headerStyle: {
-                            backgroundColor: "#1E1E1E",
-                        },
-                        headerRight: () => (
-                            <View style={{ flexDirection: "row", gap: 24, marginRight: 15 }}>
-                                <AntDesign name="search1" size={20} color="white" />
-                                <AntDesign name="addusergroup" size={20} color="white" />
-                            </View>
-                        ),
+                        headerShown: false,
                         tabBarLabelStyle: { color: "white" },
                         tabBarIcon: ({ focused }) =>
                             focused ? (
@@ -57,7 +83,7 @@ export default function BottomTabNavigator() {
                         headerShown: true,
                         headerTitle: "",
                         headerStyle: {
-                            backgroundColor: "#1E1E1E",
+                            backgroundColor: "#222222",
                         },
                         headerRight: () => (
                             <View style={{ flexDirection: "row", gap: 24, marginRight: 15 }}>
@@ -82,7 +108,7 @@ export default function BottomTabNavigator() {
                         headerShown: true,
                         headerTitle: "",
                         headerStyle: {
-                            backgroundColor: "#1E1E1E",
+                            backgroundColor: "#222222",
                         },
                         headerRight: () => (
                             <View style={{ flexDirection: "row", gap: 24, marginRight: 15 }}>
@@ -106,7 +132,7 @@ export default function BottomTabNavigator() {
                         headerShown: true,
                         headerTitle: "",
                         headerStyle: {
-                            backgroundColor: "#1E1E1E",
+                            backgroundColor: "#222222",
                         },
                         headerRight: () => (
                             <View style={{ flexDirection: "row", gap: 24, marginRight: 15 }}>
@@ -116,13 +142,54 @@ export default function BottomTabNavigator() {
                         tabBarLabelStyle: { color: "white" },
                         tabBarIcon: ({ focused }) =>
                             focused ? (
-                                <FontAwesome6 name="user-group" size={15} color="green" />
+                                <Image source={{uri: user?.picture?.small}} className="w-8 h-8 rounded-full border-2 border-green-800"/>
                             ) : (
-                                <FontAwesome6 name="user-group" size={15} color="white" />
+                                <Image source={{uri: user?.picture?.small}} className="w-8 h-8 rounded-full"/>
                             ),
                     }}
                 />
             </Tab.Navigator>
+        </>
+    );
+};
+
+const Stack = createNativeStackNavigator();
+
+export default function Navigation() {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="Main"
+                    component={BottomTabNavigator}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+
+            </Stack.Navigator>
+
+            <StatusBar style="auto" />
         </NavigationContainer>
     );
-}
+};
+
+const styles = StyleSheet.create({
+    addButton: {
+        position: 'absolute',
+        bottom: 65,
+        right: 10,
+        backgroundColor: '#0E9587',
+        paddingVertical: 12,
+        paddingHorizontal: 24,
+        borderRadius: 999,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    addButtonText: {
+        color: 'white',
+        marginLeft: 8,
+        fontSize: 18,
+    },
+});
