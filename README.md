@@ -75,34 +75,12 @@ splitwise/
 └── App.js              # Application entry point
 ```
 
-### Users
-
-- `POST /api/v1/users` - Create user
-- `PUT /api/v1/users/:id` - Update user
-- `GET /api/v1/users/:id` - Get user details
-
-### Group Management
-
-- `POST /api/v1/groups` - Create group
-- `DELETE /api/v1/groups/:id` - Delete group
-- `GET /api/v1/groups/:id` - Get group details
-
-### Friends
-
-- `GET /api/v1/friends/:id` - Get friend details
-- `POST /api/v1/friends` - Add friend
-
-### Expenses
-
-- `POST /api/v1/expenses` - Create expense
-- `GET /api/v1/expenses/:id` - Get expense details
-
 ### Prerequisites
 
 - Node.js (v14 or higher)
 - npm or yarn
 - Expo CLI
-- Android Studio (for Android development)
+- VsCode
 - Xcode (for iOS development, macOS only)
 
 ### Running the App
