@@ -1,55 +1,59 @@
 import { Text, View, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import { calculateTotalBalance } from '../utility/calculateBalances';
-import FilterMenu from './FilterMenu';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const TotalBalanceHeader = ({ groups, type = 'groups' }) => {
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
+const TotalBalanceHeader = ({ groups, selectedFilter = 'all', setFilterMenuVisible }) => {
   const [totalOverallBalance, setTotalOverallBalance] = useState(0);
-  
+
   useEffect(() => {
     if (!groups || !Array.isArray(groups)) {
       setTotalOverallBalance(0);
       return;
     }
-    
+
     let total = 0;
     groups.forEach(group => {
       if (group) {
         const balance = calculateTotalBalance(group);
+        
+        // Only include balances that match the filter criteria
         if (balance !== null) {
-          total += parseFloat(balance);
+          if (selectedFilter === 'all' || 
+             (selectedFilter === 'outstanding' && Math.abs(balance) > 0) ||
+             (selectedFilter === 'owe' && balance < 0) ||
+             (selectedFilter === 'owed' && balance > 0)) {
+            total += parseFloat(balance);
+          }
         }
       }
     });
-    
+
     setTotalOverallBalance(total);
-  }, [groups]);
-  
+  }, [groups, selectedFilter]);
+
   const textColorClass = totalOverallBalance > 0 ? 'text-teal-400' : 'text-orange-500';
-  
+
   return (
     <View className="flex flex-row items-center justify-between mr-8 ml-2 mt-2">
       <View className="flex-row items-center ml-4">
         <Text className="text-xl text-white">
           Overall,
           <Text className={textColorClass}>
-            {totalOverallBalance > 0 
+            {totalOverallBalance > 0
               ? ` you are owed ₹${Math.abs(totalOverallBalance).toFixed(2)}`
               : ` you owe ₹${Math.abs(totalOverallBalance).toFixed(2)}`}
           </Text>
         </Text>
       </View>
-      <TouchableOpacity onPress={() => setIsMenuVisible(true)}>
-        <AntDesign name="menufold" size={24} color="white" />
+
+      <TouchableOpacity
+        onPress={() => setFilterMenuVisible(true)}
+        className="flex-row items-center"
+      >
+        <MaterialIcons name="filter-list" size={24} color="white" />
       </TouchableOpacity>
-      
-      <FilterMenu 
-        isVisible={isMenuVisible}
-        onClose={() => setIsMenuVisible(false)}
-        type={type}
-      />
+
     </View>
   );
 };

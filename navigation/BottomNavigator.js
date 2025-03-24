@@ -2,19 +2,29 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar, View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import { StatusBar, View, StyleSheet, Image } from 'react-native';
 import { AntDesign, Feather, FontAwesome5, FontAwesome6 } from '@expo/vector-icons';
 import { useGroupContext } from '../context/GlobalContext';
+import { useNavigation } from '@react-navigation/native';
 
 import GroupScreen from '../screens/GroupScreen';
 import FriendsScreen from '../screens/FriendsScreen';
 import AccountScreen from '../screens/AccountScreen';
 import ActivityScreen from '../screens/ActivityScreen';
 import GroupInfo from '../components/group/GroupInfo';
+import AddGroup from '../components/group/AddGroup';
+import FriendInfo from '../components/friends/FriendInfo';
 
 const GroupStack = createNativeStackNavigator();
 
 const GroupStackScreens = () => {
+    const navigation = useNavigation();
+
+    const handlePress = () => {
+        navigation.navigate("Groups", {
+            screen: "AddGroup",
+        });
+    };
 
     return (
         <GroupStack.Navigator>
@@ -30,7 +40,7 @@ const GroupStackScreens = () => {
                     headerRight: () => (
                         <View style={{ flexDirection: "row", gap: 24, marginRight: 15 }}>
                             <AntDesign name="search1" size={20} color="white" />
-                            <AntDesign name="addusergroup" size={20} color="white" />
+                            <AntDesign name="addusergroup" onPress={handlePress} size={20} color="white" />
                         </View>
                     ),
                 }}
@@ -42,15 +52,54 @@ const GroupStackScreens = () => {
                     headerShown: false,
                 }}
             />
+            <GroupStack.Screen
+                name="AddGroup"
+                component={AddGroup}
+                options={{
+                    headerShown: false,
+                }}
+            />
         </GroupStack.Navigator>
+    );
+};
+
+const FriendsStack = createNativeStackNavigator();
+
+const FriendsStackScreens = () => {
+    return (
+        <FriendsStack.Navigator>
+            <FriendsStack.Screen
+                name="FriendsScreen"
+                component={FriendsScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: "",
+                    headerStyle: {
+                        backgroundColor: "#222222",
+                    },
+                    headerRight: () => (
+                        <View style={{ flexDirection: "row", gap: 24, marginRight: 15 }}>
+                            <AntDesign name="search1" size={20} color="white" />
+                            <AntDesign name="adduser" size={20} color="white" />
+                        </View>
+                    ),
+                }}
+            />
+            <FriendsStack.Screen
+                name="FriendInfo"
+                component={FriendInfo}
+                options={{
+                    headerShown: false,
+                }}
+            />
+        </FriendsStack.Navigator>
     );
 };
 
 const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
-    const {user} = useGroupContext();
-    console.log('user',user?.picture?.small);
+    const { user } = useGroupContext();
     return (
         <>
             <Tab.Navigator
@@ -77,20 +126,10 @@ function BottomTabNavigator() {
                 />
                 <Tab.Screen
                     name="Friends"
-                    component={FriendsScreen}
+                    component={FriendsStackScreens}
                     options={{
                         tabBarLabel: "Friends",
-                        headerShown: true,
-                        headerTitle: "",
-                        headerStyle: {
-                            backgroundColor: "#222222",
-                        },
-                        headerRight: () => (
-                            <View style={{ flexDirection: "row", gap: 24, marginRight: 15 }}>
-                                <AntDesign name="search1" size={20} color="white" />
-                                <AntDesign name="adduser" size={20} color="white" />
-                            </View>
-                        ),
+                        headerShown: false,
                         tabBarLabelStyle: { color: "white" },
                         tabBarIcon: ({ focused }) =>
                             focused ? (
@@ -142,9 +181,9 @@ function BottomTabNavigator() {
                         tabBarLabelStyle: { color: "white" },
                         tabBarIcon: ({ focused }) =>
                             focused ? (
-                                <Image source={{uri: user?.picture?.small}} className="w-8 h-8 rounded-full border-2 border-green-800"/>
+                                <Image source={{ uri: user?.picture?.small }} className="w-8 h-8 rounded-full border-2 border-green-800" />
                             ) : (
-                                <Image source={{uri: user?.picture?.small}} className="w-8 h-8 rounded-full"/>
+                                <Image source={{ uri: user?.picture?.small }} className="w-8 h-8 rounded-full" />
                             ),
                     }}
                 />

@@ -16,7 +16,6 @@ export const GroupProvider = ({ children }) => {
       try {
         const res = await getUser();
         setUser(res.user);
-        console.log("usrData===>", res)
       } catch (error) {
         setError(error);
       }

@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import React from 'react';
 
-const FilterMenu = ({ isVisible, onClose, type = 'groups' }) => {
+const FilterMenu = ({ isVisible, onClose, type = 'groups', selectedFilter, onFilterChange }) => {
   const options = type === 'groups' 
     ? [
         { id: 'all', label: 'All groups' },
@@ -31,9 +31,9 @@ const FilterMenu = ({ isVisible, onClose, type = 'groups' }) => {
           {options.map((option) => (
             <TouchableOpacity
               key={option.id}
-              className="px-4 py-3"
+              className={`px-4 py-3 ${selectedFilter === option.id ? 'bg-[#3d3d3d]' : ''}`}
               onPress={() => {
-                // Handle filter selection here
+                onFilterChange(option.id);
                 onClose();
               }}
             >
