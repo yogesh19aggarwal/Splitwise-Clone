@@ -15,7 +15,7 @@ const FriendInfo = () => {
     useEffect(() => {
         const fetchFriendInfo = async () => {
             try {
-                const response = await getFriendById(id); // Call the API
+                const response = await getFriendById(id);
                 setFriendInfo(response.friend);
             } catch (err) {
                 console.error('Error fetching friend info:', err);
@@ -31,6 +31,10 @@ const FriendInfo = () => {
     const handleBack = () => {
         navigation.goBack();
     };
+
+    const handleSetting = () =>{
+        navigation.navigate('FriendSetting', {id: friendInfo?.id, firstName: friendInfo?.first_name, lastName: friendInfo?.last_name, friendImage: friendInfo?.picture?.medium })
+    }
 
     if (loading) {
         return (
@@ -60,7 +64,7 @@ const FriendInfo = () => {
                         <AntDesign name="left" size={24} color="white" />
                     </TouchableOpacity>
                     <TouchableOpacity>
-                        <Feather name="settings" size={24} color="white" />
+                        <Feather name="settings" onPress={handleSetting} size={24} color="white" />
                     </TouchableOpacity>
                 </View>
             </ImageBackground>

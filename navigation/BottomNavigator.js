@@ -14,6 +14,9 @@ import ActivityScreen from '../screens/ActivityScreen';
 import GroupInfo from '../components/group/GroupInfo';
 import AddGroup from '../components/group/AddGroup';
 import FriendInfo from '../components/friends/FriendInfo';
+import EditAccount from '../components/account/EditAccount';
+import GroupSetting from '../components/group/GroupSetting';
+import FriendSetting from '../components/friends/FriendSetting'
 
 const GroupStack = createNativeStackNavigator();
 
@@ -59,6 +62,13 @@ const GroupStackScreens = () => {
                     headerShown: false,
                 }}
             />
+            <GroupStack.Screen
+                name="GroupSetting"
+                component={GroupSetting}
+                options={{
+                    headerShown: false,
+                }}
+            />
         </GroupStack.Navigator>
     );
 };
@@ -92,7 +102,43 @@ const FriendsStackScreens = () => {
                     headerShown: false,
                 }}
             />
+            <FriendsStack.Screen
+                name="FriendSetting"
+                component={FriendSetting}
+                options={{
+                    headerShown: false,
+                }}
+            />
         </FriendsStack.Navigator>
+    );
+};
+
+const AccountStack = createNativeStackNavigator();
+
+const AccountStackScreens = () => {
+    return (
+        <AccountStack.Navigator>
+            <AccountStack.Screen
+                name='AccountScreen'
+                component={AccountScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: "",
+                    headerStyle: {
+                        backgroundColor: "#222222",
+                    },
+                    headerRight: () => (
+                        <View style={{ flexDirection: "row", gap: 24, marginRight: 15 }}>
+                            <AntDesign name="search1" size={20} color="white" />
+                        </View>
+                    ),
+                }}
+            />
+            <AccountStack.Screen
+                name='AccountSetting'
+                component={EditAccount}
+            />
+        </AccountStack.Navigator>
     );
 };
 
@@ -165,19 +211,10 @@ function BottomTabNavigator() {
                 />
                 <Tab.Screen
                     name="Account"
-                    component={AccountScreen}
+                    component={AccountStackScreens}
                     options={{
                         tabBarLabel: "Account",
-                        headerShown: true,
-                        headerTitle: "",
-                        headerStyle: {
-                            backgroundColor: "#222222",
-                        },
-                        headerRight: () => (
-                            <View style={{ flexDirection: "row", gap: 24, marginRight: 15 }}>
-                                <AntDesign name="search1" size={20} color="white" />
-                            </View>
-                        ),
+                        headerShown: false,
                         tabBarLabelStyle: { color: "white" },
                         tabBarIcon: ({ focused }) =>
                             focused ? (
@@ -212,23 +249,3 @@ export default function Navigation() {
         </NavigationContainer>
     );
 };
-
-const styles = StyleSheet.create({
-    addButton: {
-        position: 'absolute',
-        bottom: 65,
-        right: 10,
-        backgroundColor: '#0E9587',
-        paddingVertical: 12,
-        paddingHorizontal: 24,
-        borderRadius: 999,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    addButtonText: {
-        color: 'white',
-        marginLeft: 8,
-        fontSize: 18,
-    },
-});

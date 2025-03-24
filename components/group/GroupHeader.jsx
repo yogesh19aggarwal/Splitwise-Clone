@@ -1,8 +1,15 @@
 import React from 'react';
 import { View, TouchableOpacity, ImageBackground } from 'react-native';
 import { AntDesign, Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-const GroupHeader = ({ coverPhoto, onBack }) => {
+const GroupHeader = ({ coverPhoto, onBack, id, name, image }) => {
+  const navigation = useNavigation();
+
+  const handleSetting = ()=>{
+    navigation.navigate('GroupSetting', {id: id, groupName: name, groupImage: image});
+  };
+  
   return (
     <ImageBackground
       source={{ uri: coverPhoto }}
@@ -14,7 +21,7 @@ const GroupHeader = ({ coverPhoto, onBack }) => {
           <AntDesign name="left" size={24} color="white" />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Feather name="settings" size={24} color="white" />
+          <Feather name="settings" onPress={handleSetting} size={24} color="white" />
         </TouchableOpacity>
       </View>
     </ImageBackground>

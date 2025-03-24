@@ -26,7 +26,7 @@ export const GroupProvider = ({ children }) => {
   },[])
 
   return (
-    <GroupContext.Provider value={{ groups, setGroups, user, setUser }}>
+    <GroupContext.Provider value={{ groups, setGroups, user, setUser, error, loading, setError }}>
       {children}
     </GroupContext.Provider>
   );

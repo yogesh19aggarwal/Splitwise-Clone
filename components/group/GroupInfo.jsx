@@ -64,7 +64,10 @@ const GroupInfo = () => {
   return (
     <View className="flex-1 bg-[#1c1c1e]">
       <GroupHeader 
-        coverPhoto={groupInfo?.cover_photo?.xlarge} 
+        coverPhoto={groupInfo?.cover_photo?.xlarge}
+        id={groupInfo?.id}
+        name={groupInfo?.name}
+        image={groupInfo?.avatar?.medium}
         onBack={handleBack} 
       />
       

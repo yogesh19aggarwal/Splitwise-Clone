@@ -1,12 +1,35 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, ScrollView, ActivityIndicator } from 'react-native';
-import React from 'react';
-import { getUser } from '../services/getApi';
+import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
+import React, { useCallback } from 'react';
 import { useGroupContext } from '../context/GlobalContext';
 import { Ionicons, MaterialIcons, AntDesign, Feather, FontAwesome } from '@expo/vector-icons';
+import { getUser } from '../services/getApi';
+import { useNavigation } from '@react-navigation/native';
 
 const AccountScreen = () => {
+  const navigation = useNavigation();
+  const [refreshing, setRefreshing] = React.useState(false);
+  const { user, error, loading, setError, setUser } = useGroupContext();
 
-  const { user, error, loading } = useGroupContext();
+  const handleEdit = () => {
+    navigation.navigate('AccountSetting', { id: user.id });
+  };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      getData();
+    }, 1000);
+  }, []);
+
+  const getData = async () => {
+    try {
+      const res = await getUser();
+      setUser(res.user);
+    } catch (error) {
+      setError(error);
+    }
+    setRefreshing(false);
+  };
 
   if (loading) {
     return (
@@ -26,15 +49,19 @@ const AccountScreen = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-[#222222]">
-      <ScrollView>
+
+      <ScrollView refreshControl={<RefreshControl
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+      />}>
         <Text className="text-2xl text-white ml-6">Account</Text>
-       
+
         <View className="pt-4 pb-6 px-6 border-b border-gray-700">
           <View className="flex-row items-center">
             <View className="mr-4">
               {user?.picture ? (
-                <Image 
-                  source={{ uri: user.picture.medium }} 
+                <Image
+                  source={{ uri: user.picture.medium }}
                   className="w-20 h-20 rounded-full"
                 />
               ) : (
@@ -50,6 +77,7 @@ const AccountScreen = () => {
               <Text className="text-white text-2xl font-semibold">{user?.first_name || 'User'}</Text>
               <Text className="text-gray-400">{user?.email || 'No email'}</Text>
             </View>
+            <Feather name="edit-2" className="ml-10" onPress={handleEdit} size={24} color="white" />
           </View>
         </View>
 
@@ -58,7 +86,7 @@ const AccountScreen = () => {
           <View className="flex-1">
             <Text className="text-white text-lg">Scan code</Text>
           </View>
-          
+
         </TouchableOpacity>
 
         <TouchableOpacity className="flex-row items-center px-6 py-4 ">
@@ -66,7 +94,7 @@ const AccountScreen = () => {
           <View className="flex-1">
             <Text className="text-white text-lg">Splitwise Pro</Text>
           </View>
-          
+
         </TouchableOpacity>
 
         <View className="mt-6 px-6 mb-2">
@@ -78,7 +106,7 @@ const AccountScreen = () => {
           <View className="flex-1">
             <Text className="text-white text-lg">Email settings</Text>
           </View>
-          
+
         </TouchableOpacity>
 
         <TouchableOpacity className="flex-row items-center px-6 py-4 ">
@@ -86,7 +114,7 @@ const AccountScreen = () => {
           <View className="flex-1">
             <Text className="text-white text-lg">Device and push notification settings</Text>
           </View>
-          
+
         </TouchableOpacity>
 
         <TouchableOpacity className="flex-row items-center px-6 py-4 ">
@@ -94,7 +122,7 @@ const AccountScreen = () => {
           <View className="flex-1">
             <Text className="text-white text-lg">Security</Text>
           </View>
-          
+
         </TouchableOpacity>
 
         <View className="mt-6 px-6 mb-2">
@@ -106,7 +134,7 @@ const AccountScreen = () => {
           <View className="flex-1">
             <Text className="text-white text-lg">Rate Splitwise</Text>
           </View>
-          
+
         </TouchableOpacity>
 
         <TouchableOpacity className="flex-row items-center px-6 py-4 border-b border-gray-700">
@@ -114,7 +142,7 @@ const AccountScreen = () => {
           <View className="flex-1">
             <Text className="text-white text-lg">Contact Splitwise support</Text>
           </View>
-          
+
         </TouchableOpacity>
 
         <TouchableOpacity className="flex-row items-center px-6 py-4 mt-6  ">

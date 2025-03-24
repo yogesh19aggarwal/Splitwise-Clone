@@ -1,8 +1,8 @@
-import { apiConnector } from './apiConnector';
+import { apiConnector } from "./apiConnector";
 
-export const addGroup = (group) =>{
+export const deleteGroup=async (id) =>{
     return new Promise((resolve, reject) => {
-        apiConnector.post('/create_group', group)
+        apiConnector.post(`/delete_group/${id}`)
             .then((response) => {
                 resolve(response.data);
             })
@@ -12,9 +12,9 @@ export const addGroup = (group) =>{
     });
 };
 
-export const updateUser = (id, user) => {
+export const removeFriend = async (id) =>{
     return new Promise((resolve, reject) => {
-        apiConnector.put(`/update_user/${id}`, user)
+        apiConnector.post(`/delete_friend/${id}`)
             .then((response) => {
                 resolve(response.data);
             })
@@ -22,4 +22,4 @@ export const updateUser = (id, user) => {
                 reject(error);
             });
     });
-}
+};
