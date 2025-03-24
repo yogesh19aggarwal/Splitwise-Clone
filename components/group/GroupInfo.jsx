@@ -5,7 +5,6 @@ import { getGroupById } from '../../services/getApi';
 import { useNavigation } from '@react-navigation/native';
 import { calculateTotalBalance, calculatePeopleBalance } from '../../utility/calculateBalances';
 
-// Import individual components
 import GroupHeader from './GroupHeader';
 import GroupProfile from './GroupProfile';
 import GroupActions from './GroupActions';
@@ -57,6 +56,10 @@ const GroupInfo = () => {
     }
   }, [groupInfo, loading]);
 
+  const handleExpense = () =>{
+    navigation.navigate('AddExpense', {id: id, groupName: groupInfo?.name, groupImage: groupInfo?.avatar?.small});
+  };
+
   const handleBack = () => {
     navigation.goBack();
   };
@@ -82,7 +85,7 @@ const GroupInfo = () => {
         <ExpensesList loading={loading} />
       </ScrollView>
 
-      <TouchableOpacity className="absolute bottom-4 right-4 bg-[#0E9587] py-3 px-6 rounded-full flex-row items-center justify-center">
+      <TouchableOpacity onPress={handleExpense} className="absolute bottom-4 right-4 bg-[#0E9587] py-3 px-6 rounded-full flex-row items-center justify-center">
         <Ionicons name="receipt-outline" size={20} color="white" />
         <Text className="text-white ml-2 text-lg">Add expense</Text>
       </TouchableOpacity>

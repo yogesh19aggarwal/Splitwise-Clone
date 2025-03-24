@@ -22,4 +22,16 @@ export const updateUser = (id, user) => {
                 reject(error);
             });
     });
+};
+
+export const addExpense = (expense) =>{
+    return new Promise((resolve, reject) => {
+        apiConnector.put(`/create_expense/`, expense)
+            .then((response) => {
+                resolve(response.data);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
 }

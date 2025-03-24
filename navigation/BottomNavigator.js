@@ -16,7 +16,8 @@ import AddGroup from '../components/group/AddGroup';
 import FriendInfo from '../components/friends/FriendInfo';
 import EditAccount from '../components/account/EditAccount';
 import GroupSetting from '../components/group/GroupSetting';
-import FriendSetting from '../components/friends/FriendSetting'
+import FriendSetting from '../components/friends/FriendSetting';
+import AddExpense from '../components/group/AddExpense';
 
 const GroupStack = createNativeStackNavigator();
 
@@ -65,6 +66,13 @@ const GroupStackScreens = () => {
             <GroupStack.Screen
                 name="GroupSetting"
                 component={GroupSetting}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <GroupStack.Screen
+                name="AddExpense"
+                component={AddExpense}
                 options={{
                     headerShown: false,
                 }}
