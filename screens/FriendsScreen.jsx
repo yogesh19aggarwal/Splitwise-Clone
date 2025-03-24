@@ -36,6 +36,7 @@ const FriendsScreen = () => {
     setRefreshing(false);
     setLoading(false);
   };
+  
   useEffect(() => {
     getData();
   }, []);
@@ -48,7 +49,6 @@ const FriendsScreen = () => {
         loading ? <Text className="text-white text-center mt-4">Loading...</Text> :
           error ? <Text className="text-white text-center mt-4">Error: {error.message}</Text> :
             <>
-
               <ScrollView refreshControl={<RefreshControl
                 refreshing={refreshing}
                 onRefresh={onRefresh}
