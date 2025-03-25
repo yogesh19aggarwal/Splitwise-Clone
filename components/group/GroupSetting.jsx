@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Alert, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, Image, Share } from 'react-native';
 import React from 'react';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { deleteGroup } from '../../services/deleteApi';
@@ -16,6 +16,20 @@ const GroupSetting = () => {
         } catch (error) {
             console.error('API Error:', error);
             Alert.alert('Error', 'Failed to delete group. Please try again.');
+        }
+    };
+
+    const handleShare = async () => {
+        try {
+            const result = await Share.share({
+                message: `Join our group "${groupName}" on https://deeplinking-beta.vercel.app/?id=${id}`,
+            });
+    
+            if (result.action === Share.sharedAction) {
+                console.log('Link shared successfully');
+            }
+        } catch (error) {
+            Alert.alert('Error', 'Failed to share group link');
         }
     };
 
@@ -42,10 +56,17 @@ const GroupSetting = () => {
             </View>
 
             <TouchableOpacity
-                onPress={handleDelete}
-                className="bg-red-500 py-3 rounded-full items-center mt-6"
+                onPress={handleShare}
+                className="border-2 border-[#0E9587] py-3 w-40 rounded-full items-center mt-6"
             >
-                <Text className="text-white text-lg font-bold">Delete Group</Text>
+                <Text className="text-white text-lg font-bold">Share</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={handleDelete}
+                className="border-2 border-red-400 py-3 w-40 rounded-full items-center mt-6"
+            >
+                <Text className="text-red-400 text-lg font-bold">Delete Group</Text>
             </TouchableOpacity>
         </View>
     );

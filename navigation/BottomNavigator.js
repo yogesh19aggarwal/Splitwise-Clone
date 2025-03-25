@@ -18,6 +18,24 @@ import EditAccount from '../components/account/EditAccount';
 import GroupSetting from '../components/group/GroupSetting';
 import FriendSetting from '../components/friends/FriendSetting';
 import AddExpense from '../components/group/AddExpense';
+import * as Linking from 'expo-linking';
+
+const linking = {
+    prefixes: [Linking.createURL('/')], 
+    config: {
+      screens: {
+        Main: {
+          screens: {
+            Groups: {
+              screens: {
+                GroupInfo: 'GroupInfo/:id',
+              },
+            },
+          },
+        },
+      },
+    },
+  };
 
 const GroupStack = createNativeStackNavigator();
 
@@ -241,7 +259,7 @@ const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
     return (
-        <NavigationContainer>
+        <NavigationContainer linking={linking}>
             <Stack.Navigator>
                 <Stack.Screen
                     name="Main"
