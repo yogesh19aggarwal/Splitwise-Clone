@@ -60,10 +60,6 @@ const GroupInfo = () => {
     navigation.navigate('AddExpense', {id: id, groupName: groupInfo?.name, groupImage: groupInfo?.avatar?.small});
   };
 
-  const handleBack = () => {
-    navigation.goBack();
-  };
-
   return (
     <View className="flex-1 bg-[#1c1c1e]">
       <GroupHeader 
@@ -71,7 +67,6 @@ const GroupInfo = () => {
         id={groupInfo?.id}
         name={groupInfo?.name}
         image={groupInfo?.avatar?.medium}
-        onBack={handleBack} 
       />
       
       <GroupProfile 

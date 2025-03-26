@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar, View, StyleSheet, Image } from 'react-native';
+import { StatusBar, View, Image } from 'react-native';
 import { AntDesign, Feather, FontAwesome5, FontAwesome6 } from '@expo/vector-icons';
 import { useGroupContext } from '../context/GlobalContext';
 import { useNavigation } from '@react-navigation/native';
@@ -21,21 +21,21 @@ import AddExpense from '../components/group/AddExpense';
 import * as Linking from 'expo-linking';
 
 const linking = {
-    prefixes: [Linking.createURL('/')], 
+    prefixes: [Linking.createURL('/')],
     config: {
-      screens: {
-        Main: {
-          screens: {
-            Groups: {
-              screens: {
-                GroupInfo: 'GroupInfo/:id',
-              },
+        screens: {
+            Main: {
+                screens: {
+                    Groups: {
+                        screens: {
+                            GroupInfo: 'GroupInfo/:id',
+                        },
+                    },
+                },
             },
-          },
         },
-      },
     },
-  };
+};
 
 const GroupStack = createNativeStackNavigator();
 
@@ -49,7 +49,10 @@ const GroupStackScreens = () => {
     };
 
     return (
-        <GroupStack.Navigator>
+        <GroupStack.Navigator
+            screenOptions={{
+                animation: 'slide_from_right',
+            }}>
             <GroupStack.Screen
                 name="GroupScreen"
                 component={GroupScreen}
@@ -103,7 +106,10 @@ const FriendsStack = createNativeStackNavigator();
 
 const FriendsStackScreens = () => {
     return (
-        <FriendsStack.Navigator>
+        <FriendsStack.Navigator
+            screenOptions={{
+                animation: 'slide_from_right',
+            }}>
             <FriendsStack.Screen
                 name="FriendsScreen"
                 component={FriendsScreen}
@@ -143,7 +149,10 @@ const AccountStack = createNativeStackNavigator();
 
 const AccountStackScreens = () => {
     return (
-        <AccountStack.Navigator>
+        <AccountStack.Navigator
+            screenOptions={{
+                animation: 'slide_from_left',
+            }}>
             <AccountStack.Screen
                 name='AccountScreen'
                 component={AccountScreen}

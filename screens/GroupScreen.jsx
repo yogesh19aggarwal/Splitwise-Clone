@@ -53,8 +53,6 @@ const GroupScreen = () => {
   }, [selectedFilter]);
 
   const handleNewGroup = () => {
-    console.log('Add new group');
-    
     navigation.navigate("Groups", {
       screen: "AddGroup",
   });
