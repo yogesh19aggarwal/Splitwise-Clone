@@ -20,8 +20,6 @@ const EditAccount = () => {
     if (lastName) userData.last_name = lastName;
     if (email) userData.email = email;
     if (password) userData.password = password;
-    if (locale) userData.locale = locale;
-    if (defaultCurrency) userData.default_currency = defaultCurrency;
 
     try {
       await updateUser(id, userData); 
