@@ -20,8 +20,6 @@ const EditAccount = () => {
     if (lastName) userData.last_name = lastName;
     if (email) userData.email = email;
     if (password) userData.password = password;
-    if (locale) userData.locale = locale;
-    if (defaultCurrency) userData.default_currency = defaultCurrency;
 
     try {
       await updateUser(id, userData); 
@@ -79,7 +77,7 @@ const EditAccount = () => {
 
       <TouchableOpacity
         className="bg-orange-500 py-3 rounded-full items-center mt-6"
-        onPress={handleSaveChanges}
+        onPress={()=>handleSaveChanges()}
       >
         <Text className="text-white text-lg font-bold">Save Changes</Text>
       </TouchableOpacity>

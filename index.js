@@ -1,7 +1,6 @@
 import "./global.css";
 import { registerRootComponent } from "expo";
 import Navigator from "./navigation/BottomNavigator";
-import { GroupProvider } from "./context/GlobalContext";
 import { LogBox } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import store from './features/store';

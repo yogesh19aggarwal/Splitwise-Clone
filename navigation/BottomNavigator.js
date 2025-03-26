@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar, View, Image } from 'react-native';
 import { AntDesign, Feather, FontAwesome5, FontAwesome6 } from '@expo/vector-icons';
-import { useGroupContext } from '../context/GlobalContext';
 import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUser } from '../services/getApi';
+import { setUser, setLoading, setError } from '../features/slices/userSlice';
 
 import GroupScreen from '../screens/GroupScreen';
 import FriendsScreen from '../screens/FriendsScreen';
@@ -181,7 +182,7 @@ const AccountStackScreens = () => {
 const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
-    const { user } = useSelector((state)=>state.user);
+    const { user } = useSelector((state) => state.user);
     return (
         <>
             <Tab.Navigator
@@ -268,6 +269,22 @@ function BottomTabNavigator() {
 const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            dispatch(setLoading(true));
+            try {
+                const res = await getUser();
+                dispatch(setUser(res.user));
+            } catch (err) {
+                dispatch(setError(err));
+            }
+            dispatch(setLoading(false));
+        };
+        fetchUser();
+    }, [dispatch]);
+
     return (
         <NavigationContainer linking={linking}>
             <Stack.Navigator>

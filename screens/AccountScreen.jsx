@@ -10,7 +10,6 @@ import { useNavigation } from '@react-navigation/native';
 const AccountScreen = () => {
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = React.useState(false);
-  // const { user, error, loading, setError, setUser } = useGroupContext();
   const dispatch = useDispatch();
   const { user, error, loading } = useSelector((state)=>state.user);
 

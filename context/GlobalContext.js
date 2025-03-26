@@ -11,19 +11,6 @@ export const GroupProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(()=>{
-    const fetchUser = async () => {
-      try {
-        const res = await getUser();
-        setUser(res.user);
-      } catch (error) {
-        setError(error);
-      }
-
-      setLoading(false);
-    };
-    fetchUser();
-  },[])
 
   return (
     <GroupContext.Provider value={{ groups, setGroups, user, setUser, error, loading, setError }}>
