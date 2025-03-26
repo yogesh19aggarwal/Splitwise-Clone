@@ -6,7 +6,9 @@ import GroupCard from '../components/group/GroupCard';
 import TotalBalanceHeader from '../components/TotalBalanceHeader';
 import GroupToggleSection from '../components/group/GroupToggleSection';
 import { getFilteredGroups } from '../utility/groupUtils';
-import { useGroupContext } from '../context/GlobalContext';
+// import { useGroupContext } from '../context/GlobalContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { setGroups } from '../features/slices/groupSlice';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import FilterMenu from '../components/FilterMenu';
 
@@ -14,11 +16,12 @@ const GroupScreen = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showInactiveGroups, setShowInactiveGroups] = useState(false);
-  const { groups, setGroups } = useGroupContext();
   const [filterMenuVisible, setFilterMenuVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { groups } = useSelector((state) => state.groups);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -33,7 +36,7 @@ const GroupScreen = () => {
       const sortedGroups = response.groups.sort(
         (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
       );
-      setGroups(sortedGroups);
+      dispatch(setGroups(sortedGroups));
     } catch (error) {
       console.log(error);
       setError(error);
@@ -55,7 +58,7 @@ const GroupScreen = () => {
   const handleNewGroup = () => {
     navigation.navigate("Groups", {
       screen: "AddGroup",
-  });
+    });
   };
 
   const { activeGroups, settledGroups } = getFilteredGroups(groups, showInactiveGroups, selectedFilter);

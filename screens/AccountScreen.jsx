@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
 import React, { useCallback } from 'react';
-import { useGroupContext } from '../context/GlobalContext';
+// import { useGroupContext } from '../context/GlobalContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser, setLoading, setError } from '../features/slices/userSlice';
 import { Ionicons, MaterialIcons, AntDesign, Feather, FontAwesome } from '@expo/vector-icons';
 import { getUser } from '../services/getApi';
 import { useNavigation } from '@react-navigation/native';
@@ -8,7 +10,9 @@ import { useNavigation } from '@react-navigation/native';
 const AccountScreen = () => {
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = React.useState(false);
-  const { user, error, loading, setError, setUser } = useGroupContext();
+  // const { user, error, loading, setError, setUser } = useGroupContext();
+  const dispatch = useDispatch();
+  const { user, error, loading } = useSelector((state)=>state.user);
 
   const handleEdit = () => {
     navigation.navigate('AccountSetting', { id: user.id });
@@ -22,13 +26,15 @@ const AccountScreen = () => {
   }, []);
 
   const getData = async () => {
+    dispatch(setLoading(true));
     try {
       const res = await getUser();
-      setUser(res.user);
-    } catch (error) {
-      setError(error);
+      dispatch(setUser(res.user));
+    } catch (err) {
+      dispatch(setError(err));
     }
     setRefreshing(false);
+    dispatch(setLoading(false));
   };
 
   if (loading) {

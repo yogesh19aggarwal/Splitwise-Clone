@@ -4,6 +4,8 @@ import Navigator from "./navigation/BottomNavigator";
 import { GroupProvider } from "./context/GlobalContext";
 import { LogBox } from 'react-native';
 import { enableScreens } from 'react-native-screens';
+import store from './features/store';
+import { Provider } from 'react-redux';
 enableScreens();
 
 LogBox.ignoreLogs(['Support for defaultProps will be removed']);
@@ -11,9 +13,9 @@ LogBox.ignoreLogs(['Support for defaultProps will be removed']);
 export function App() {
 
   return (
-    <GroupProvider>
+    <Provider store={store}>
         <Navigator />
-    </GroupProvider>
+    </Provider>
   );
 }
 

@@ -6,6 +6,7 @@ import { StatusBar, View, Image } from 'react-native';
 import { AntDesign, Feather, FontAwesome5, FontAwesome6 } from '@expo/vector-icons';
 import { useGroupContext } from '../context/GlobalContext';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 import GroupScreen from '../screens/GroupScreen';
 import FriendsScreen from '../screens/FriendsScreen';
@@ -180,7 +181,7 @@ const AccountStackScreens = () => {
 const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
-    const { user } = useGroupContext();
+    const { user } = useSelector((state)=>state.user);
     return (
         <>
             <Tab.Navigator
