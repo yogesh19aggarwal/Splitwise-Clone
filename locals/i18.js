@@ -15,8 +15,6 @@ i18n.locale = preferredLocale.startsWith("de")
     ? "hi"
     : "en";
 
-i18n.locale="hi";
-
 i18n.fallbacks = true;
 
 export default i18n;
