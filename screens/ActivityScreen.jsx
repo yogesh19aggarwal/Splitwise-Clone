@@ -3,10 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { useGroupContext } from '../context/GlobalContext';
 import ActivityCard from '../components/activity/ActivityCard';
 import { Ionicons } from '@expo/vector-icons';
-import i18n from '../locals/i18';
+// import i18n from '../locals/i18';
+import { useDynamicTranslations } from '../locals/i18';
 
 const ActivityScreen = () => {
   const { notifications, notiError } = useGroupContext();
+  const i18n = useDynamicTranslations();
+
 
   return (
     <SafeAreaView className="flex-1 bg-[#1f1f1f]">

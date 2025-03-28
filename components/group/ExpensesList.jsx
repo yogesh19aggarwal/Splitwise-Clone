@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import GroupExpenseItem from './GroupExpenseItem';
-import i18n from '../../locals/i18';
+import { useDynamicTranslations } from '../../locals/i18';
 
 const ExpensesList = ({ loading }) => {
+  const i18n = useDynamicTranslations();
+  
   if (loading) {
     return <Text className="text-white text-center">Loading...</Text>;
   }

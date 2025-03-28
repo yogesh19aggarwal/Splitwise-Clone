@@ -2,11 +2,12 @@ import { View, Text, TouchableOpacity, Alert, Image } from 'react-native';
 import React from 'react';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { removeFriend } from '../../services/deleteApi';
-import i18n from '../../locals/i18';
+import { useDynamicTranslations } from '../../locals/i18';
 
 const GroupSetting = () => {
     const route = useRoute();
     const navigation = useNavigation();
+    const i18n = useDynamicTranslations();
     const { id, firstName, lastName, friendImage } = route.params;
 
     const handleDelete = async () => {

@@ -2,9 +2,11 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { calculateTotalBalance, calculatePeopleBalance } from '../../utility/calculateBalances';
-import i18n from '../../locals/i18';
+import { useDynamicTranslations } from '../../locals/i18';
 
 const GroupCard = ({ group }) => {
+  const i18n = useDynamicTranslations();
+
   const navigation = useNavigation();
   const [balanceData, setBalanceData] = useState({
     totalBalance: null,

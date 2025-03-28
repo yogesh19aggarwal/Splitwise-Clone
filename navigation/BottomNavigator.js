@@ -19,7 +19,7 @@ import GroupSetting from '../components/group/GroupSetting';
 import FriendSetting from '../components/friends/FriendSetting';
 import AddExpense from '../components/group/AddExpense';
 import * as Linking from 'expo-linking';
-import i18n from '../locals/i18';
+import { useDynamicTranslations } from '../locals/i18';
 
 const linking = {
     prefixes: [Linking.createURL('/')],
@@ -181,6 +181,7 @@ const AccountStackScreens = () => {
 const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
+    const i18n = useDynamicTranslations();
     const { user } = useGroupContext();
     return (
         <>

@@ -1,20 +1,32 @@
 import * as Localization from "expo-localization";
-import en from "./en.json";
-import hi from "./hi.json";
-import de from "./de.json";
 import { I18n } from "i18n-js";
+import { useGroupContext } from "../context/GlobalContext";
+import { useEffect, useState } from "react";
 
-const i18n = new I18n({ en, hi, de })
+const i18n = new I18n();
 
-const preferredLocale = Localization.getLocales()[0]?.languageCode || "en";
+export const useDynamicTranslations = () => {
+  const { langData, lang } = useGroupContext();
+  const [translations, setTranslations] = useState({});
 
-i18n.defaultLocale = "en";
-i18n.locale = preferredLocale.startsWith("de")
-  ? "de"
-  : preferredLocale.startsWith("hi")
-    ? "hi"
-    : "en";
+  useEffect(() => {
+    if (langData && typeof langData === "object") {
+      const newTranslations = {
+        [lang]: langData
+      };
+      i18n.translations = newTranslations;
+      setTranslations(newTranslations);
+    }
 
-i18n.fallbacks = true;
+    if (typeof lang === "string" && lang.trim()) {
+      i18n.locale = lang;
+    }
+  }, [lang, langData]);
+
+  i18n.defaultLocale = "en";
+  i18n.fallbacks = true;
+
+  return i18n;
+};
 
 export default i18n;

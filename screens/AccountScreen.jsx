@@ -4,13 +4,14 @@ import { useGroupContext } from '../context/GlobalContext';
 import { Ionicons, MaterialIcons, AntDesign, Feather, FontAwesome } from '@expo/vector-icons';
 import { getUser } from '../services/getApi';
 import { useNavigation } from '@react-navigation/native';
-import i18n from '../locals/i18';
+import { useDynamicTranslations } from '../locals/i18';
 
 const AccountScreen = () => {
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const { user, error, loading, setError, setUser, setLang } = useGroupContext();
+  const i18n = useDynamicTranslations();
 
   const changeLanguage = (lang) => {
     i18n.locale = lang;

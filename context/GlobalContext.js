@@ -1,7 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { getUser } from '../services/getApi';
-import i18n from '../locals/i18';
-import { getNotifications } from '../services/getApi';
+import { getNotifications, getLanguage, getUser } from '../services/getApi';
 
 const GroupContext = createContext();
 
@@ -14,7 +12,8 @@ export const GroupProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [notifications, setNotifications] = useState([]);
   const [notiError, setNotiError] = useState(null);
-  const [lang, setLang] = useState(i18n.locale);
+  const [lang, setLang] = useState("en");
+  const [langData, setLangData] = useState({});
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -39,10 +38,23 @@ export const GroupProvider = ({ children }) => {
     }
     fetchUser();
     getNotificationFromAPI();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    const fetchLang = async () => {
+      try {
+        const res = await getLanguage(lang);
+        setLangData(res);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchLang();
+  }, [lang]);
 
   return (
-    <GroupContext.Provider value={{ groups, setGroups, user, setUser, error, loading, setError, setLang, notiError, notifications }}>
+    <GroupContext.Provider value={{ groups, setGroups, user, setUser, error, loading, setError, setLang, notiError, notifications, langData, lang }}>
       {children}
     </GroupContext.Provider>
   );

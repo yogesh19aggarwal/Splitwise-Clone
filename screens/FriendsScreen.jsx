@@ -8,7 +8,8 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import FilterMenu from '../components/FilterMenu';
 import { getFilteredFriends } from '../utility/groupUtils';
 import FriendCard from '../components/friends/FriendCard';
-import i18n from '../locals/i18';
+// import i18n from '../locals/i18';
+import { useDynamicTranslations } from '../locals/i18';
 
 const FriendsScreen = () => {
   const { groups } = useGroupContext();
@@ -18,6 +19,7 @@ const FriendsScreen = () => {
   const [filterMenuVisible, setFilterMenuVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [refreshing, setRefreshing] = useState(false);
+  const i18n = useDynamicTranslations();
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -37,7 +39,7 @@ const FriendsScreen = () => {
     setRefreshing(false);
     setLoading(false);
   };
-  
+
   useEffect(() => {
     getData();
   }, []);

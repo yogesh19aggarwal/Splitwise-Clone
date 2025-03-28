@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import i18n from '../../locals/i18';
+import { useDynamicTranslations } from '../../locals/i18';
 
 const GroupActions = () => {
+  const i18n = useDynamicTranslations();
+  
   return (
     <View className="mb-10">
       <ScrollView

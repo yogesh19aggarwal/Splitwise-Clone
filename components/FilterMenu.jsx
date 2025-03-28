@@ -1,8 +1,10 @@
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import React from 'react';
-import i18n from '../locals/i18';
+import { useDynamicTranslations } from '../locals/i18';
 
 const FilterMenu = ({ isVisible, onClose, type = 'groups', selectedFilter, onFilterChange }) => {
+  const i18n = useDynamicTranslations();
+  
   const options = type === 'groups'
     ? [
       { id: 'all', label: `${i18n.t("all_groups")}` },

@@ -1,8 +1,10 @@
 import { Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
-import i18n from '../../locals/i18';
+import { useDynamicTranslations } from '../../locals/i18';
 
 const GroupToggleSection = ({ showInactiveGroups, setShowInactiveGroups, inactiveGroupsCount }) => {
+  const i18n = useDynamicTranslations();
+  
   return (
     <View className="px-4 my-6">
       {showInactiveGroups ? (

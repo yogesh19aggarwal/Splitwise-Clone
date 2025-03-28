@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import i18n from '../../locals/i18';
+import { useDynamicTranslations } from '../../locals/i18';
 
 const GroupExpenseItem = ({ month, day, title, isPaid, amount, paymentInfo }) => {
+  const i18n = useDynamicTranslations();
+
   const isPositive = isPaid;
   const statusColor = isPositive ? 'text-[#34C759]' : 'text-[#FF9200]';
   const statusText = isPositive ? `${i18n.t("you_lent")}` : `${i18n.t("you_borrowed")}`;

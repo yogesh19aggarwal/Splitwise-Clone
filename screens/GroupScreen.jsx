@@ -9,7 +9,8 @@ import { getFilteredGroups } from '../utility/groupUtils';
 import { useGroupContext } from '../context/GlobalContext';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import FilterMenu from '../components/FilterMenu';
-import i18n from '../locals/i18';
+// import i18n from '../locals/i18';
+import { useDynamicTranslations } from '../locals/i18';
 
 const GroupScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -20,6 +21,7 @@ const GroupScreen = () => {
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
+  const i18n = useDynamicTranslations();
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);

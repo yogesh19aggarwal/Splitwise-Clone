@@ -2,9 +2,10 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { calculateTotalBalance } from '../utility/calculateBalances';
 import { MaterialIcons } from '@expo/vector-icons';
-import i18n from '../locals/i18';
+import { useDynamicTranslations } from '../locals/i18';
 
 const TotalBalanceHeader = ({ groups, selectedFilter = 'all', setFilterMenuVisible }) => {
+  const i18n = useDynamicTranslations();
   const [totalOverallBalance, setTotalOverallBalance] = useState(0);
 
   useEffect(() => {

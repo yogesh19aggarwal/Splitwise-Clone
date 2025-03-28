@@ -2,10 +2,11 @@ import { View, Text, Image } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
-import i18n from '../../locals/i18';
+import { useDynamicTranslations } from '../../locals/i18';
 
 const FriendCard = ({ friend }) => {
     const navigation = useNavigation();
+    const i18n = useDynamicTranslations();
 
     const handlePress = () => {
         navigation.navigate("FriendInfo", { id: friend.id });

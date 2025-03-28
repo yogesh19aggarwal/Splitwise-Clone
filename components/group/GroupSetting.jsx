@@ -2,9 +2,10 @@ import { View, Text, TouchableOpacity, Alert, Image, Share } from 'react-native'
 import React from 'react';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { deleteGroup } from '../../services/deleteApi';
-import i18n from '../../locals/i18';
+import { useDynamicTranslations } from '../../locals/i18';
 
 const GroupSetting = () => {
+    const i18n = useDynamicTranslations();
     const route = useRoute();
     const navigation = useNavigation();
     const { id, groupName, groupImage } = route.params;

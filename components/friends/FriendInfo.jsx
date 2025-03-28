@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { AntDesign, Feather, Ionicons } from '@expo/vector-icons';
 import { getFriendById } from '../../services/getApi';
-import i18n from '../../locals/i18';
+import { useDynamicTranslations } from '../../locals/i18';
 
 const FriendInfo = () => {
     const navigation = useNavigation();
@@ -12,6 +12,7 @@ const FriendInfo = () => {
     const [friendInfo, setFriendInfo] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const i18n = useDynamicTranslations();
 
     useEffect(() => {
         const fetchFriendInfo = async () => {

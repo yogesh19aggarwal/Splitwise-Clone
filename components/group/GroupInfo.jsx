@@ -10,9 +10,10 @@ import GroupProfile from './GroupProfile';
 import GroupActions from './GroupActions';
 import ExpensesList from './ExpensesList';
 import { Ionicons } from '@expo/vector-icons';
-import i18n from '../../locals/i18';
+import { useDynamicTranslations } from '../../locals/i18';
 
 const GroupInfo = () => {
+  const i18n = useDynamicTranslations();
   const navigation = useNavigation();
   const route = useRoute();
   const { id } = route.params;
