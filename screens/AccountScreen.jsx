@@ -1,14 +1,20 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useGroupContext } from '../context/GlobalContext';
 import { Ionicons, MaterialIcons, AntDesign, Feather, FontAwesome } from '@expo/vector-icons';
 import { getUser } from '../services/getApi';
 import { useNavigation } from '@react-navigation/native';
+import i18n from '../locals/i18';
 
 const AccountScreen = () => {
   const navigation = useNavigation();
-  const [refreshing, setRefreshing] = React.useState(false);
-  const { user, error, loading, setError, setUser } = useGroupContext();
+  const [refreshing, setRefreshing] = useState(false);
+  const { user, error, loading, setError, setUser , setLang} = useGroupContext();
+
+  const changeLanguage = (lang)=>{
+    i18n.locale = lang;
+    setLang(lang);
+  };
 
   const handleEdit = () => {
     navigation.navigate('AccountSetting', { id: user.id });
@@ -37,7 +43,7 @@ const AccountScreen = () => {
         <ActivityIndicator size="large" color="#5bc5a7" />
       </SafeAreaView>
     );
-  }
+  };
 
   if (error) {
     return (
@@ -45,7 +51,7 @@ const AccountScreen = () => {
         <Text className="text-white text-lg">Error loading profile: {error.message}</Text>
       </SafeAreaView>
     );
-  }
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-[#222222]">
@@ -94,7 +100,6 @@ const AccountScreen = () => {
           <View className="flex-1">
             <Text className="text-white text-lg">Splitwise Pro</Text>
           </View>
-
         </TouchableOpacity>
 
         <View className="mt-6 px-6 mb-2">
@@ -114,7 +119,20 @@ const AccountScreen = () => {
           <View className="flex-1">
             <Text className="text-white text-lg">Device and push notification settings</Text>
           </View>
+        </TouchableOpacity>
 
+        <TouchableOpacity className="flex-row items-center px-6 py-4 " onPress={()=>changeLanguage('en')}>
+          <Ionicons name="notifications" size={24} color="white" className="mr-4" />
+          <View className="flex-1">
+            <Text className="text-white text-lg">English</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity className="flex-row items-center px-6 py-4 " onPress={()=>changeLanguage('hi')}>
+          <Ionicons name="notifications" size={24} color="white" className="mr-4" />
+          <View className="flex-1">
+            <Text className="text-white text-lg">Hindi</Text>
+          </View>
         </TouchableOpacity>
 
         <TouchableOpacity className="flex-row items-center px-6 py-4 ">

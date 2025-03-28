@@ -2,6 +2,7 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { calculateTotalBalance } from '../utility/calculateBalances';
 import { MaterialIcons } from '@expo/vector-icons';
+import i18n from '../locals/i18';
 
 const TotalBalanceHeader = ({ groups, selectedFilter = 'all', setFilterMenuVisible }) => {
   const [totalOverallBalance, setTotalOverallBalance] = useState(0);
@@ -38,11 +39,11 @@ const TotalBalanceHeader = ({ groups, selectedFilter = 'all', setFilterMenuVisib
     <View className="flex flex-row items-center justify-between mr-8 ml-2 mt-2">
       <View className="flex-row items-center ml-4">
         <Text className="text-xl text-white">
-          Overall,
+          {i18n.t("overall")},
           <Text className={textColorClass}>
             {totalOverallBalance > 0
-              ? ` you are owed ₹${Math.abs(totalOverallBalance).toFixed(2)}`
-              : ` you owe ₹${Math.abs(totalOverallBalance).toFixed(2)}`}
+              ? ` ${i18n.t("you_owe")} ₹${Math.abs(totalOverallBalance).toFixed(2)}`
+              : ` ${i18n.t("you_are_owed")} ₹${Math.abs(totalOverallBalance).toFixed(2)}`}
           </Text>
         </Text>
       </View>

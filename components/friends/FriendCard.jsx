@@ -2,6 +2,7 @@ import { View, Text, Image } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
+import i18n from '../../locals/i18';
 
 const FriendCard = ({ friend }) => {
     const navigation = useNavigation();
@@ -27,17 +28,17 @@ const FriendCard = ({ friend }) => {
                 {friend.balance.length != 0 ? (
                     friend.balance[0].amount < 0 ? (
                         <View className="flex flex-col items-center">
-                            <Text className="text-base text-orange-500">you owe</Text>
+                            <Text className="text-base text-orange-500">{i18n.t("you_are_owed")}</Text>
                             <Text className="text-base text-orange-500">₹{Math.abs(friend.balance[0].amount)}</Text>
                         </View>
                     ) : (
                         <View className="flex flex-col items-center">
-                            <Text className="text-base text-green-400">you owe</Text>
+                            <Text className="text-base text-green-400">{i18n.t("you_owe")}</Text>
                             <Text className="text-base text-green-400">₹{Math.abs(friend.balance[0].amount).toFixed(2)}</Text>
                         </View>
                     )
                 ) : (
-                    <Text className="text-sm text-white">no expense</Text>
+                    <Text className="text-sm text-white">{i18n.t("no_expense")}</Text>
                 )}
             </View>
         </TouchableOpacity>

@@ -9,6 +9,7 @@ import { getFilteredGroups } from '../utility/groupUtils';
 import { useGroupContext } from '../context/GlobalContext';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import FilterMenu from '../components/FilterMenu';
+import i18n from '../locals/i18';
 
 const GroupScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -63,9 +64,9 @@ const GroupScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-[#1f1f1f]">
       {loading ? (
-        <Text className="text-white text-center mt-4">Loading...</Text>
+        <Text className="text-white text-center mt-4">{i18n.t("loading")}</Text>
       ) : error ? (
-        <Text className="text-white text-center mt-4">Error: {error.message}</Text>
+        <Text className="text-white text-center mt-4">{i18n.t("error")}{error.message}</Text>
       ) : (
         <>
           <ScrollView refreshControl={<RefreshControl
@@ -84,11 +85,10 @@ const GroupScreen = () => {
               ))
             ) : (
               <Text className="text-white text-center mt-4">
-                No groups match the selected filter.
+                {i18n.t("no_group_match")}
               </Text>
             )}
 
-            {/* Show inactive groups toggle only when filter is set to 'all' */}
             {selectedFilter === 'all' && settledGroups && settledGroups.length > 0 && (
               <GroupToggleSection
                 showInactiveGroups={showInactiveGroups}
@@ -109,7 +109,7 @@ const GroupScreen = () => {
                 >
                   <AntDesign name="addusergroup" size={24} color="white" />
                   <Text className="text-teal-200 text-lg">
-                    Start a new group
+                    {i18n.t("start_a_new_group")}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -128,7 +128,7 @@ const GroupScreen = () => {
 
       <TouchableOpacity className="absolute bottom-4 right-4 bg-[#0E9587] py-3 px-6 rounded-full flex-row items-center justify-center">
         <Ionicons name="receipt-outline" size={20} color="white" />
-        <Text className="text-white ml-2 text-lg">Add expense</Text>
+        <Text className="text-white ml-2 text-lg">{i18n.t("add_expense")}</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

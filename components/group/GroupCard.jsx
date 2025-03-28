@@ -2,6 +2,7 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { calculateTotalBalance, calculatePeopleBalance } from '../../utility/calculateBalances';
+import i18n from '../../locals/i18';
 
 const GroupCard = ({ group }) => {
   const navigation = useNavigation();
@@ -29,12 +30,12 @@ const GroupCard = ({ group }) => {
   }, [group]);
 
   const getBalanceText = (totalBalance) => {
-    if (totalBalance === null) return "no expenses";
-    if (Math.abs(totalBalance) < 1) return "settled up";
+    if (totalBalance === null) return `${i18n.t('no_expense')}`;
+    if (Math.abs(totalBalance) < 1) return `${i18n.t('settled_up')}`;
 
     return totalBalance > 0
-      ? `you are owed ₹${Math.abs(totalBalance).toFixed(2)}`
-      : `you owe ₹${Math.abs(totalBalance).toFixed(2)}`;
+      ? `${i18n.t("you_owe")} ₹${Math.abs(totalBalance).toFixed(2)}`
+      : `${i18n.t("you_are_owed")} ₹${Math.abs(totalBalance).toFixed(2)}`;
   };
 
   const getBalanceTextColor = (totalBalance) => {
@@ -69,7 +70,7 @@ const GroupCard = ({ group }) => {
               {Object.keys(balanceData.oweToPeople).length > 0 &&
                 Object.entries(balanceData.oweToPeople).map(([person, amount]) => (
                   <Text key={person} className="text-white">
-                    You owe {person} <Text className="text-orange-500">₹{amount.toFixed(2)}</Text>
+                    {i18n.t("you_owe")} {person} <Text className="text-orange-500">₹{amount.toFixed(2)}</Text>
                   </Text>
                 ))
               }
@@ -77,7 +78,7 @@ const GroupCard = ({ group }) => {
               {Object.keys(balanceData.lentToPeople).length > 0 &&
                 Object.entries(balanceData.lentToPeople).map(([person, amount]) => (
                   <Text key={person} className="text-white">
-                    {person} owes you <Text className="text-teal-400">₹{amount.toFixed(2)}</Text>
+                    {person} {i18n.t("you_owe")} <Text className="text-teal-400">₹{amount.toFixed(2)}</Text>
                   </Text>
                 ))
               }

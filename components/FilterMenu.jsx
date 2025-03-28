@@ -1,20 +1,21 @@
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import React from 'react';
+import i18n from '../locals/i18';
 
 const FilterMenu = ({ isVisible, onClose, type = 'groups', selectedFilter, onFilterChange }) => {
-  const options = type === 'groups' 
+  const options = type === 'groups'
     ? [
-        { id: 'all', label: 'All groups' },
-        { id: 'outstanding', label: 'Outstanding balances' },
-        { id: 'owe', label: 'Groups you owe' },
-        { id: 'owed', label: 'Groups that owe you' }
-      ]
+      { id: 'all', label: `${i18n.t("all_groups")}` },
+      { id: 'outstanding', label: `${i18n.t("outstanding_balances")}` },
+      { id: 'owe', label: `${i18n.t("groups_you_owe")}` },
+      { id: 'owed', label: `${i18n.t("groups_that_owe_you")}` }
+    ]
     : [
-        { id: 'all', label: 'All friends' },
-        { id: 'outstanding', label: 'Outstanding balances' },
-        { id: 'owe', label: 'Friends you owe' },
-        { id: 'owed', label: 'Friends who owe you' }
-      ];
+      { id: 'all', label: `${i18n.t("all_friends")}` },
+      { id: 'outstanding', label: `${i18n.t("outstanding_balances")}` },
+      { id: 'owe', label: `${i18n.t("friends_you_owe")}` },
+      { id: 'owed', label: `${i18n.t("friends_who_owe_you")}` }
+    ];
 
   return (
     <Modal
@@ -23,7 +24,7 @@ const FilterMenu = ({ isVisible, onClose, type = 'groups', selectedFilter, onFil
       animationType="fade"
       onRequestClose={onClose}
     >
-      <TouchableOpacity 
+      <TouchableOpacity
         style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}
         onPress={onClose}
       >
