@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, Alert, Image, Share } from 'react-native'
 import React from 'react';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { deleteGroup } from '../../services/deleteApi';
+import i18n from '../../locals/i18';
 
 const GroupSetting = () => {
     const route = useRoute();
@@ -25,9 +26,6 @@ const GroupSetting = () => {
                 message: `Join our group "${groupName}" on https://deeplinking-beta.vercel.app/?id=${id}`,
             });
     
-            if (result.action === Share.sharedAction) {
-                console.log('Link shared successfully');
-            }
         } catch (error) {
             Alert.alert('Error', 'Failed to share group link');
         }
@@ -38,9 +36,9 @@ const GroupSetting = () => {
         
             <View className="flex-row items-center mb-6">
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Text className="text-white text-lg">{'< Back'}</Text>
+                    <Text className="text-white text-lg">{`< ${i18n.t("back")}`}</Text>
                 </TouchableOpacity>
-                <Text className="text-white ml-6 text-lg font-bold">Group Settings</Text>
+                <Text className="text-white ml-6 text-lg font-bold">{`${i18n.t("group")} ${i18n.t("setting")}`}</Text>
             </View>
 
             <View className="flex-row items-center mb-8">
@@ -59,14 +57,14 @@ const GroupSetting = () => {
                 onPress={handleShare}
                 className="border-2 border-[#0E9587] py-3 w-40 rounded-full items-center mt-6"
             >
-                <Text className="text-white text-lg font-bold">Share</Text>
+                <Text className="text-white text-lg font-bold">{i18n.t("share")}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
                 onPress={handleDelete}
                 className="border-2 border-red-400 py-3 w-40 rounded-full items-center mt-6"
             >
-                <Text className="text-red-400 text-lg font-bold">Delete Group</Text>
+                <Text className="text-red-400 text-lg font-bold">{i18n.t("delete_group")}</Text>
             </TouchableOpacity>
         </View>
     );

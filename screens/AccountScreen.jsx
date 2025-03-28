@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
+import { Text, View, Image, TouchableOpacity, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl, Modal } from 'react-native';
 import React, { useCallback, useState } from 'react';
 import { useGroupContext } from '../context/GlobalContext';
 import { Ionicons, MaterialIcons, AntDesign, Feather, FontAwesome } from '@expo/vector-icons';
@@ -9,9 +9,10 @@ import i18n from '../locals/i18';
 const AccountScreen = () => {
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
-  const { user, error, loading, setError, setUser , setLang} = useGroupContext();
+  const [modalVisible, setModalVisible] = useState(false);
+  const { user, error, loading, setError, setUser, setLang } = useGroupContext();
 
-  const changeLanguage = (lang)=>{
+  const changeLanguage = (lang) => {
     i18n.locale = lang;
     setLang(lang);
   };
@@ -60,7 +61,7 @@ const AccountScreen = () => {
         refreshing={refreshing}
         onRefresh={onRefresh}
       />}>
-        <Text className="text-2xl text-white ml-6">Account</Text>
+        <Text className="text-2xl text-white ml-6">{i18n.t("account")}</Text>
 
         <View className="pt-4 pb-6 px-6 border-b border-gray-700">
           <View className="flex-row items-center">
@@ -90,7 +91,7 @@ const AccountScreen = () => {
         <TouchableOpacity className="flex-row items-center px-6 py-4  ">
           <AntDesign name="qrcode" size={24} color="white" className="mr-4" />
           <View className="flex-1">
-            <Text className="text-white text-lg">Scan code</Text>
+            <Text className="text-white text-lg">{i18n.t("scan_code")}</Text>
           </View>
 
         </TouchableOpacity>
@@ -98,18 +99,18 @@ const AccountScreen = () => {
         <TouchableOpacity className="flex-row items-center px-6 py-4 ">
           <FontAwesome name="diamond" size={24} color="#a461e5" className="mr-4" />
           <View className="flex-1">
-            <Text className="text-white text-lg">Splitwise Pro</Text>
+            <Text className="text-white text-lg">{i18n.t("splitwise_pro")}</Text>
           </View>
         </TouchableOpacity>
 
         <View className="mt-6 px-6 mb-2">
-          <Text className="text-white text-sm">Preferences</Text>
+          <Text className="text-white text-sm">{i18n.t("preferences")}</Text>
         </View>
 
         <TouchableOpacity className="flex-row items-center px-6 py-4  ">
           <MaterialIcons name="email" size={24} color="white" className="mr-4" />
           <View className="flex-1">
-            <Text className="text-white text-lg">Email settings</Text>
+            <Text className="text-white text-lg">{i18n.t("email_setting")}</Text>
           </View>
 
         </TouchableOpacity>
@@ -117,40 +118,33 @@ const AccountScreen = () => {
         <TouchableOpacity className="flex-row items-center px-6 py-4 ">
           <Ionicons name="notifications" size={24} color="white" className="mr-4" />
           <View className="flex-1">
-            <Text className="text-white text-lg">Device and push notification settings</Text>
+            <Text className="text-white text-lg">{i18n.t("device_push")}</Text>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity className="flex-row items-center px-6 py-4 " onPress={()=>changeLanguage('en')}>
+        <TouchableOpacity className="flex-row items-center px-6 py-4 " onPress={() => setModalVisible(true)}>
           <Ionicons name="notifications" size={24} color="white" className="mr-4" />
           <View className="flex-1">
-            <Text className="text-white text-lg">English</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity className="flex-row items-center px-6 py-4 " onPress={()=>changeLanguage('hi')}>
-          <Ionicons name="notifications" size={24} color="white" className="mr-4" />
-          <View className="flex-1">
-            <Text className="text-white text-lg">Hindi</Text>
+            <Text className="text-white text-lg">{i18n.t("language")}</Text>
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity className="flex-row items-center px-6 py-4 ">
           <Feather name="lock" size={24} color="white" className="mr-4" />
           <View className="flex-1">
-            <Text className="text-white text-lg">Security</Text>
+            <Text className="text-white text-lg">{i18n.t("security")}</Text>
           </View>
 
         </TouchableOpacity>
 
         <View className="mt-6 px-6 mb-2">
-          <Text className="text-white text-sm">Feedback</Text>
+          <Text className="text-white text-sm">{i18n.t("feedback")}</Text>
         </View>
 
         <TouchableOpacity className="flex-row items-center px-6 py-4  ">
           <AntDesign name="star" size={24} color="white" className="mr-4" />
           <View className="flex-1">
-            <Text className="text-white text-lg">Rate Splitwise</Text>
+            <Text className="text-white text-lg">{i18n.t("rate_splitwise")}</Text>
           </View>
 
         </TouchableOpacity>
@@ -158,7 +152,7 @@ const AccountScreen = () => {
         <TouchableOpacity className="flex-row items-center px-6 py-4 border-b border-gray-700">
           <AntDesign name="questioncircle" size={24} color="white" className="mr-4" />
           <View className="flex-1">
-            <Text className="text-white text-lg">Contact Splitwise support</Text>
+            <Text className="text-white text-lg">{i18n.t("contact_support")}</Text>
           </View>
 
         </TouchableOpacity>
@@ -166,31 +160,48 @@ const AccountScreen = () => {
         <TouchableOpacity className="flex-row items-center px-6 py-4 mt-6  ">
           <AntDesign name="logout" size={24} color="#5bc5a7" className="mr-4" />
           <View className="flex-1">
-            <Text className="text-[#5bc5a7] text-lg">Log out</Text>
+            <Text className="text-[#5bc5a7] text-lg">{i18n.t("logout")}</Text>
           </View>
         </TouchableOpacity>
 
         <View className="py-6 px-4 items-center">
           <Text className="text-gray-500 text-center">
-            Made with ✨ in Providence, RI, USA
+            {i18n.t("made_in")}
           </Text>
           <Text className="text-gray-500 text-center mt-1">
-            Copyright © 2025 Splitwise, Inc.
+            {i18n.t("copyright")}
           </Text>
           <Text className="text-gray-500 text-center mt-1">
-            P.S. Bunnies!
+            {i18n.t("ps_bunny")}
           </Text>
           <TouchableOpacity className="mt-4">
             <Text className="text-[#5bc5a7] text-center">
-              Privacy Policy
+              {i18n.t("privacy_policy")}
             </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
+
+      <Modal visible={modalVisible} transparent animationType="slide">
+        <View className="flex-1 justify-center items-center bg-black/50">
+          <View className="bg-white rounded-lg w-3/4 p-4">
+            <TouchableOpacity onPress={() => { changeLanguage("en"); setModalVisible(false); }} className="p-4">
+              <Text className="text-lg">English </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => { changeLanguage("hi"); setModalVisible(false); }} className="p-4">
+              <Text className="text-lg">हिन्दी</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => { changeLanguage("de"); setModalVisible(false); }} className="p-4">
+              <Text className="text-lg">Deutsch </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setModalVisible(false)} className="p-4">
+              <Text className="text-red-500 text-lg">Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
 
 export default AccountScreen;
-
-const styles = StyleSheet.create({})

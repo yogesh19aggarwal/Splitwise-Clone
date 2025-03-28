@@ -19,6 +19,7 @@ import GroupSetting from '../components/group/GroupSetting';
 import FriendSetting from '../components/friends/FriendSetting';
 import AddExpense from '../components/group/AddExpense';
 import * as Linking from 'expo-linking';
+import i18n from '../locals/i18';
 
 const linking = {
     prefixes: [Linking.createURL('/')],
@@ -194,7 +195,7 @@ function BottomTabNavigator() {
                     name="Groups"
                     component={GroupStackScreens}
                     options={{
-                        tabBarLabel: "Groups",
+                        tabBarLabel: `${i18n.t("group")}`,
                         headerShown: false,
                         tabBarLabelStyle: { color: "white" },
                         tabBarIcon: ({ focused }) =>
@@ -209,7 +210,7 @@ function BottomTabNavigator() {
                     name="Friends"
                     component={FriendsStackScreens}
                     options={{
-                        tabBarLabel: "Friends",
+                        tabBarLabel: `${i18n.t("friend")}`,
                         headerShown: false,
                         tabBarLabelStyle: { color: "white" },
                         tabBarIcon: ({ focused }) =>
@@ -224,7 +225,7 @@ function BottomTabNavigator() {
                     name="Activity"
                     component={ActivityScreen}
                     options={{
-                        tabBarLabel: "Activity",
+                        tabBarLabel: `${i18n.t("activity")}`,
                         headerShown: true,
                         headerTitle: "",
                         headerStyle: {
@@ -248,7 +249,7 @@ function BottomTabNavigator() {
                     name="Account"
                     component={AccountStackScreens}
                     options={{
-                        tabBarLabel: "Account",
+                        tabBarLabel: `${i18n.t("account")}`,
                         headerShown: false,
                         tabBarLabelStyle: { color: "white" },
                         tabBarIcon: ({ focused }) =>

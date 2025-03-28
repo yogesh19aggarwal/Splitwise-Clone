@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import i18n from '../../locals/i18';
 
 const GroupExpenseItem = ({ month, day, title, isPaid, amount, paymentInfo }) => {
   const isPositive = isPaid;
   const statusColor = isPositive ? 'text-[#34C759]' : 'text-[#FF9200]';
-  const statusText = isPositive ? 'you lent' : 'you borrowed';
+  const statusText = isPositive ? `${i18n.t("you_lent")}` : `${i18n.t("you_borrowed")}`;
   
   return (
     <View className="flex-row mb-6">
@@ -27,7 +28,7 @@ const GroupExpenseItem = ({ month, day, title, isPaid, amount, paymentInfo }) =>
             </View>
 
             <View className="flex-row justify-between">
-              <Text className="text-gray-400">{paymentInfo}</Text>
+              <Text numberOfLines={2} className="text-gray-400 w-52">{paymentInfo}</Text>
               <Text className={`${statusColor} text-xl`}>₹{amount}</Text>
             </View>
           </View>

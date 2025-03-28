@@ -47,8 +47,8 @@ const FriendsScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-[#1f1f1f]">
       {
-        loading ? <Text className="text-white text-center mt-4">Loading...</Text> :
-          error ? <Text className="text-white text-center mt-4">Error: {error.message}</Text> :
+        loading ? <Text className="text-white text-center mt-4">{`${i18n.t("loading")}...`}</Text> :
+          error ? <Text className="text-white text-center mt-4">{`${i18n.t("error")}: ${error.message}`}</Text> :
             <>
               <ScrollView refreshControl={<RefreshControl
                 refreshing={refreshing}

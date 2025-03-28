@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { AntDesign, Feather, Ionicons } from '@expo/vector-icons';
 import { getFriendById } from '../../services/getApi';
+import i18n from '../../locals/i18';
 
 const FriendInfo = () => {
     const navigation = useNavigation();
@@ -39,7 +40,7 @@ const FriendInfo = () => {
     if (loading) {
         return (
             <View className="flex-1 bg-[#1c1c1e] justify-center items-center">
-                <Text className="text-white text-lg">Loading...</Text>
+                <Text className="text-white text-lg">{`${i18n.t("loading")}...`}</Text>
             </View>
         );
     };
@@ -90,24 +91,24 @@ const FriendInfo = () => {
                     showsHorizontalScrollIndicator={false}
                 >
                     <TouchableOpacity className="bg-[#FF9200] px-6 rounded-lg mx-2 items-center justify-center w-48 h-14">
-                        <Text className="text-white text-lg font-medium">Settle up</Text>
+                        <Text className="text-white text-lg font-medium">{i18n.t("settle_up")}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity className="bg-[#2A2A2D] px-6 rounded-lg mx-2 items-center justify-center w-48 h-14">
-                        <Text className="text-white text-lg font-medium">Remind...</Text>
+                        <Text className="text-white text-lg font-medium">{i18n.t("remind")}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity className="flex-row items-center bg-[#2A2A2D] py-4 px-6 rounded-lg mx-2 justify-center w-48 h-14">
                         <Ionicons name="diamond" size={20} color="purple" />
-                        <Text className="text-white text-lg font-medium ml-2">Charts</Text>
+                        <Text className="text-white text-lg font-medium ml-2">{i18n.t("charts")}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity className="bg-[#2A2A2D] px-6 rounded-lg mx-2 items-center justify-center w-48 h-14">
-                        <Text className="text-white text-lg font-medium">Convert to INR</Text>
+                        <Text className="text-white text-lg font-medium">{i18n.t("convert_inr")}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity className="bg-[#2A2A2D] px-6 rounded-lg mx-2 items-center justify-center w-48 h-14">
-                        <Text className="text-white text-lg font-medium">Export</Text>
+                        <Text className="text-white text-lg font-medium">{i18n.t("export")}</Text>
                     </TouchableOpacity>
 
                 </ScrollView>
@@ -119,21 +120,21 @@ const FriendInfo = () => {
                     <View className="flex-row items-center">
                         <Ionicons name="document-text-outline" size={24} color="white" />
                         <View className="ml-3">
-                            <Text className="text-white text-base">Meenakshi mall</Text>
-                            <Text className="text-gray-400 text-sm">Shared group</Text>
+                            <Text className="text-white text-base">{i18n.t("meenakshi_mall")}</Text>
+                            <Text className="text-gray-400 text-sm">{i18n.t("shared_group")}</Text>
                         </View>
                     </View>
-                    <Text className="text-green-500 text-base">settled up</Text>
+                    <Text className="text-green-500 text-base">{i18n.t("settled_up")}</Text>
                 </View>
                 <View className="flex-row items-center justify-between mb-4">
                     <View className="flex-row items-center">
                         <Ionicons name="receipt-outline" size={24} color="white" />
                         <View className="ml-3">
-                            <Text className="text-white text-base">Hell</Text>
-                            <Text className="text-gray-400 text-sm">You paid ₹15.00</Text>
+                            <Text className="text-white text-base">{i18n.t("hall")}</Text>
+                            <Text className="text-gray-400 text-sm">{`${i18n.t("you_paid")} ₹15.00`}</Text>
                         </View>
                     </View>
-                    <Text className="text-green-500 text-base">you lent ₹15.00</Text>
+                    <Text className="text-green-500 text-base">{`${i18n.t("you_lent")} ₹15.00`}</Text>
                 </View>
             </ScrollView>
 

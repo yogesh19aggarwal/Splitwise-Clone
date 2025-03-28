@@ -10,6 +10,7 @@ import GroupProfile from './GroupProfile';
 import GroupActions from './GroupActions';
 import ExpensesList from './ExpensesList';
 import { Ionicons } from '@expo/vector-icons';
+import i18n from '../../locals/i18';
 
 const GroupInfo = () => {
   const navigation = useNavigation();
@@ -82,7 +83,7 @@ const GroupInfo = () => {
 
       <TouchableOpacity onPress={handleExpense} className="absolute bottom-4 right-4 bg-[#0E9587] py-3 px-6 rounded-full flex-row items-center justify-center">
         <Ionicons name="receipt-outline" size={20} color="white" />
-        <Text className="text-white ml-2 text-lg">Add expense</Text>
+        <Text className="text-white ml-2 text-lg">{i18n.t("add_expense")}</Text>
       </TouchableOpacity>
     </View>
   );
