@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { getNotifications, getLanguage, getUser } from '../services/getApi';
+import { fetchUserLanguage } from '../utility/fetchUserLanguage';
 
 const GroupContext = createContext();
 
@@ -12,7 +13,7 @@ export const GroupProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [notifications, setNotifications] = useState([]);
   const [notiError, setNotiError] = useState(null);
-  const [lang, setLang] = useState("en");
+  const [lang, setLang] = useState(fetchUserLanguage());
   const [langData, setLangData] = useState({});
 
   useEffect(() => {
