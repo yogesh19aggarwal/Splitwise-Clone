@@ -11,6 +11,7 @@ import { AntDesign, Ionicons } from '@expo/vector-icons';
 import FilterMenu from '../components/FilterMenu';
 import { useDynamicTranslations } from '../locals/i18';
 import { scheduleLocalNotification } from '../notification/sendNotification';
+import * as Linking from 'expo-linking';
 
 const GroupScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -65,7 +66,9 @@ const GroupScreen = () => {
     scheduleLocalNotification(
       "Expense Added",
       "Your expense has been successfully added!",
-      { screen: "Main/GroupScreen", expenseId: 123 },
+      {
+        url:Linking.createURL('groups'),
+      },
       2
     );
   };

@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { getFriends } from '../services/getApi';
 import TotalBalanceHeader from '../components/TotalBalanceHeader';
 import { useGroupContext } from '../context/GlobalContext';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import FilterMenu from '../components/FilterMenu';
 import { getFilteredFriends } from '../utility/groupUtils';
 import FriendCard from '../components/friends/FriendCard';
@@ -52,7 +52,7 @@ const FriendsScreen = () => {
         {
           url: Linking.createURL('friends'),
         },
-        2
+        5
       );
     };
 

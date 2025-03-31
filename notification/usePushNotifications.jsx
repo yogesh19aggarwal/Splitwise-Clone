@@ -6,7 +6,7 @@ import { Alert } from 'react-native';
 export const usePushNotifications = () => {
     Notifications.setNotificationHandler({
         handleNotification: async () => ({
-            shouldPlaySound: false,
+            shouldPlaySound: true,
             shouldShowAlert: true,
             shouldSetBadge: false,
         }),
