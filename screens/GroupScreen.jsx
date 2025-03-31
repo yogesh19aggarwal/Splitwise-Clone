@@ -9,8 +9,8 @@ import { getFilteredGroups } from '../utility/groupUtils';
 import { useGroupContext } from '../context/GlobalContext';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import FilterMenu from '../components/FilterMenu';
-// import i18n from '../locals/i18';
 import { useDynamicTranslations } from '../locals/i18';
+import { scheduleLocalNotification } from '../notification/sendNotification';
 
 const GroupScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -58,7 +58,16 @@ const GroupScreen = () => {
   const handleNewGroup = () => {
     navigation.navigate("Groups", {
       screen: "AddGroup",
-  });
+    });
+  };
+
+  const handleAddExpense = () => {
+    scheduleLocalNotification(
+      "Expense Added",
+      "Your expense has been successfully added!",
+      { screen: "Main/GroupScreen", expenseId: 123 },
+      2
+    );
   };
 
   const { activeGroups, settledGroups } = getFilteredGroups(groups, showInactiveGroups, selectedFilter);
@@ -128,7 +137,7 @@ const GroupScreen = () => {
         </>
       )}
 
-      <TouchableOpacity className="absolute bottom-4 right-4 bg-[#0E9587] py-3 px-6 rounded-full flex-row items-center justify-center">
+      <TouchableOpacity onPress={handleAddExpense} className="absolute bottom-4 right-4 bg-[#0E9587] py-3 px-6 rounded-full flex-row items-center justify-center">
         <Ionicons name="receipt-outline" size={20} color="white" />
         <Text className="text-white ml-2 text-lg">{i18n.t("add_expense")}</Text>
       </TouchableOpacity>

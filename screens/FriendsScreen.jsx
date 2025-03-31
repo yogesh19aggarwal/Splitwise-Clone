@@ -8,8 +8,9 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import FilterMenu from '../components/FilterMenu';
 import { getFilteredFriends } from '../utility/groupUtils';
 import FriendCard from '../components/friends/FriendCard';
-// import i18n from '../locals/i18';
 import { useDynamicTranslations } from '../locals/i18';
+import { scheduleLocalNotification } from '../notification/sendNotification';
+import * as Linking from 'expo-linking';
 
 const FriendsScreen = () => {
   const { groups } = useGroupContext();
@@ -44,6 +45,17 @@ const FriendsScreen = () => {
     getData();
   }, []);
 
+  const handleAddExpense = () => {
+      scheduleLocalNotification(
+        "Expense Added",
+        "Your expense has been successfully added!",
+        {
+          url: Linking.createURL('friends'),
+        },
+        2
+      );
+    };
+
   const filteredFriends = getFilteredFriends(friends, selectedFilter);
 
   return (
@@ -76,7 +88,7 @@ const FriendsScreen = () => {
               />
             </>
       }
-      <TouchableOpacity className="absolute bottom-4 right-4 bg-[#0E9587] py-3 px-6 rounded-full flex-row items-center justify-center">
+      <TouchableOpacity onPress={handleAddExpense} className="absolute bottom-4 right-4 bg-[#0E9587] py-3 px-6 rounded-full flex-row items-center justify-center">
         <Ionicons name="receipt-outline" size={20} color="white" />
         <Text className="text-white ml-2 text-lg">{i18n.t("add_expense")}</Text>
       </TouchableOpacity>

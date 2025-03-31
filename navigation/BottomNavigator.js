@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from '@react-navigation/native';
@@ -20,6 +20,7 @@ import FriendSetting from '../components/friends/FriendSetting';
 import AddExpense from '../components/group/AddExpense';
 import * as Linking from 'expo-linking';
 import { useDynamicTranslations } from '../locals/i18';
+import * as Notifications from 'expo-notifications';
 
 const linking = {
     prefixes: [Linking.createURL('/')],
@@ -27,6 +28,11 @@ const linking = {
         screens: {
             Main: {
                 screens: {
+                    Friends: {
+                        screens: {
+                            FriendsScreen: 'friends',
+                        },
+                    },
                     Groups: {
                         screens: {
                             GroupInfo: 'GroupInfo/:id',
@@ -37,6 +43,7 @@ const linking = {
         },
     },
 };
+
 
 const GroupStack = createNativeStackNavigator();
 
@@ -108,6 +115,7 @@ const FriendsStack = createNativeStackNavigator();
 const FriendsStackScreens = () => {
     return (
         <FriendsStack.Navigator
+            initialRouteName="FriendsScreen"
             screenOptions={{
                 animation: 'slide_from_right',
             }}>
@@ -269,6 +277,18 @@ function BottomTabNavigator() {
 const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
+
+    useEffect(() => {
+        const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+            const url = response.notification.request.content.data.url;
+            if (url) {
+                Linking.openURL(url);
+            }
+        });
+
+        return () => subscription.remove();
+    }, []);
+
     return (
         <NavigationContainer linking={linking}>
             <Stack.Navigator>
