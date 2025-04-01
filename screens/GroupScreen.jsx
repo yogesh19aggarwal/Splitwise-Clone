@@ -67,7 +67,7 @@ const GroupScreen = () => {
     scheduleNotification(
       'Group Screen',
       "hello this is a custom notification",
-      5,
+      1,
       Linking.createURL('friends')
     );
   };

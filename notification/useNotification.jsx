@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
-import * as Linking from 'expo-linking';
-import notifee, { TriggerType } from '@notifee/react-native';
+import notifee, { TriggerType, AndroidImportance } from '@notifee/react-native';
 
 const useNotification = () => {
 
@@ -14,6 +13,7 @@ const useNotification = () => {
         const channelId = await notifee.createChannel({
             id: 'default',
             name: 'Default Channel',
+            importance: AndroidImportance.HIGH
         });
 
         await notifee.displayNotification({
@@ -37,7 +37,8 @@ const useNotification = () => {
 
         const channelId = await notifee.createChannel({
             id: 'default',
-            name: 'Default Channel',
+            name: 'default',
+            // importance: AndroidImportance.HIGH,
         });
 
         const trigger = {
