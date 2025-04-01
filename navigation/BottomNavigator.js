@@ -35,7 +35,7 @@ const linking = {
                     },
                     Groups: {
                         screens: {
-                            GroupScreen:'groups',
+                            GroupScreen: 'groups',
                             GroupInfo: 'GroupInfo/:id',
                         },
                     },
@@ -303,7 +303,10 @@ export default function Navigation() {
 
             </Stack.Navigator>
 
-            <StatusBar style="auto" />
+            <StatusBar
+                barStyle='light-content'
+                backgroundColor='#222222'
+            />
         </NavigationContainer>
     );
 };
