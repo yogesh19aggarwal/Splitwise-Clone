@@ -8,6 +8,6 @@ export async function scheduleLocalNotification(title, body, data, time) {
             body: body,
             data: data,
         },
-        trigger: { seconds: time },
+        trigger: { second: time },
     });
 };
