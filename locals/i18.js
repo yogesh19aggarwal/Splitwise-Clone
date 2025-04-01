@@ -1,4 +1,3 @@
-import * as Localization from "expo-localization";
 import { I18n } from "i18n-js";
 import { useGroupContext } from "../context/GlobalContext";
 import { useEffect, useState } from "react";

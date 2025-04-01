@@ -1,15 +1,10 @@
-import * as Localization from "expo-localization";
+import * as RNLocalize from "react-native-localize";
 
 const fetchUserLanguage = () => {
-    languageArr = ["en", "hi", "de"];
+    const languageArr = ["en", "hi", "de"];
+    const languageCode = RNLocalize.getLocales()[0]?.languageCode || "en";
 
-    const languageCode = Localization.locale.split('-')[0];
-    
-    if (languageArr.includes(languageCode)) {
-        return languageCode;
-    } else {
-        return "en";
-    }
+    return languageArr.includes(languageCode) ? languageCode : "en";
 };
 
 export { fetchUserLanguage };
