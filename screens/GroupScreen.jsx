@@ -10,8 +10,8 @@ import { useGroupContext } from '../context/GlobalContext';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import FilterMenu from '../components/FilterMenu';
 import { useDynamicTranslations } from '../locals/i18';
-// import { scheduleLocalNotification } from '../notification/sendNotification';
-// import * as Linking from 'expo-linking';
+import useNotification from '../notification/useNotification';
+import * as Linking from 'expo-linking';
 
 const GroupScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -23,6 +23,7 @@ const GroupScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
   const i18n = useDynamicTranslations();
+  const { displayNotification, scheduleNotification } = useNotification();
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -63,14 +64,12 @@ const GroupScreen = () => {
   };
 
   const handleAddExpense = () => {
-    // scheduleLocalNotification(
-    //   "Expense Added",
-    //   "Your expense has been successfully added!",
-    //   {
-    //     url:Linking.createURL('groups'),
-    //   },
-    //   2
-    // );
+    scheduleNotification(
+      'Group Screen',
+      "hello this is a custom notification",
+      5,
+      Linking.createURL('friends')
+    );
   };
 
   const { activeGroups, settledGroups } = getFilteredGroups(groups, showInactiveGroups, selectedFilter);

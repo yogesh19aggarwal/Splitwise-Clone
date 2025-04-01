@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from '@react-navigation/native';
+import { Link, NavigationContainer } from '@react-navigation/native';
 import { StatusBar, View, Image } from 'react-native';
 import { AntDesign, Feather, FontAwesome5, FontAwesome6 } from '@expo/vector-icons';
 import { useGroupContext } from '../context/GlobalContext';
@@ -18,9 +18,9 @@ import EditAccount from '../components/account/EditAccount';
 import GroupSetting from '../components/group/GroupSetting';
 import FriendSetting from '../components/friends/FriendSetting';
 import AddExpense from '../components/group/AddExpense';
-import * as Linking from 'expo-linking';
+import * as Linking from 'expo-linking'; 
+import notifee, { EventType } from '@notifee/react-native';
 import { useDynamicTranslations } from '../locals/i18';
-import * as Notifications from 'expo-notifications';
 
 const linking = {
     prefixes: [Linking.createURL('/')],
@@ -36,9 +36,11 @@ const linking = {
                     Groups: {
                         screens: {
                             GroupScreen: 'groups',
-                            GroupInfo: 'GroupInfo/:id',
+                            GroupInfo: 'groupinfo/:id',
                         },
                     },
+                    Activity: "activity",
+                    Account: "account",
                 },
             },
         },
@@ -280,14 +282,27 @@ const Stack = createNativeStackNavigator();
 export default function Navigation() {
 
     useEffect(() => {
-        const subscription = Notifications.addNotificationResponseReceivedListener(response => {
-            const url = response.notification.request.content.data.url;
-            if (url) {
-                Linking.openURL(url);
+        async function onNotificationPress() {
+            return notifee.onForegroundEvent(({ type, detail }) => {
+                if (type === EventType.PRESS) {
+                    const url = detail.notification.data?.url;
+                    if (url) {
+                        Linking.openURL(url);
+                    }
+                }
+            });
+        };
+
+        onNotificationPress();
+
+        return () => notifee.onBackgroundEvent(async ({ type, detail }) => {
+            if (type === EventType.PRESS) {
+                const url = detail.notification.data?.url;
+                if (url) {
+                    Linking.openURL(url);
+                }
             }
         });
-
-        return () => subscription.remove();
     }, []);
 
     return (

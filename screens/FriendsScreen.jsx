@@ -9,8 +9,8 @@ import FilterMenu from '../components/FilterMenu';
 import { getFilteredFriends } from '../utility/groupUtils';
 import FriendCard from '../components/friends/FriendCard';
 import { useDynamicTranslations } from '../locals/i18';
-// import { scheduleLocalNotification } from '../notification/sendNotification';
-// import * as Linking from 'expo-linking';
+import * as Linking from 'expo-linking';
+import useNotification from '../notification/useNotification';
 
 const FriendsScreen = () => {
   const { groups } = useGroupContext();
@@ -41,20 +41,35 @@ const FriendsScreen = () => {
     setLoading(false);
   };
 
+  // useEffect(() => {
+  //   const handleDeepLink = (event) => {
+  //     const { url } = event;
+  //     if (url) {
+  //       handleNotificationPress(url);
+  //     }
+  //   };
+
+  //   Linking.addEventListener('url', handleDeepLink);
+
+  //   return () => {
+  //     Linking.removeEventListener('url', handleDeepLink);
+  //   };
+  // }, []);
+
   useEffect(() => {
     getData();
   }, []);
 
   const handleAddExpense = () => {
-      // scheduleLocalNotification(
-      //   "Expense Added",
-      //   "Your expense has been successfully added!",
-      //   {
-      //     url: Linking.createURL('friends'),
-      //   },
-      //   5
-      // );
-    };
+    // scheduleLocalNotification(
+    //   "Expense Added",
+    //   "Your expense has been successfully added!",
+    //   {
+    //     url: Linking.createURL('friends'),
+    //   },
+    //   5
+    // );
+  };
 
   const filteredFriends = getFilteredFriends(friends, selectedFilter);
 
